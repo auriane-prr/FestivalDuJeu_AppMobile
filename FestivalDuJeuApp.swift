@@ -13,8 +13,14 @@ struct FestivalDuJeuApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginView()
-                .environmentObject(viewModel) // Passez l'instance de AuthViewModel à LoginView
+            // Navigation conditionnelle basée sur l'état d'authentification
+            if viewModel.isAuthenticated {
+                HomeView()
+                    .environmentObject(viewModel)
+            } else {
+                LoginView()
+                    .environmentObject(viewModel)
+            }
         }
     }
 }

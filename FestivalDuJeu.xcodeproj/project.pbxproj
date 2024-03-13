@@ -17,6 +17,8 @@
 		8C8A8D172BA192CF00414ADD /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D162BA192CF00414ADD /* AuthViewModel.swift */; };
 		8C8A8D192BA1962A00414ADD /* Benevole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D182BA1962A00414ADD /* Benevole.swift */; };
 		8C8A8D1B2BA1A14000414ADD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D1A2BA1A14000414ADD /* HomeView.swift */; };
+		8C8A8D1D2BA1B65400414ADD /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D1C2BA1B65400414ADD /* RegisterView.swift */; };
+		8C8A8D1F2BA1CCF900414ADD /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		8C8A8D162BA192CF00414ADD /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		8C8A8D182BA1962A00414ADD /* Benevole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benevole.swift; sourceTree = "<group>"; };
 		8C8A8D1A2BA1A14000414ADD /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8C8A8D1C2BA1B65400414ADD /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 		8C8A8CDB2BA18A5E00414ADD = {
 			isa = PBXGroup;
 			children = (
+				8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */,
+				8C8A8D1C2BA1B65400414ADD /* RegisterView.swift */,
 				8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */,
 				8C8A8D122BA18C5200414ADD /* LoginView.swift */,
 				8C8A8D1A2BA1A14000414ADD /* HomeView.swift */,
@@ -270,7 +276,9 @@
 			files = (
 				8C8A8D172BA192CF00414ADD /* AuthViewModel.swift in Sources */,
 				8C8A8D132BA18C5200414ADD /* LoginView.swift in Sources */,
+				8C8A8D1F2BA1CCF900414ADD /* RegisterViewModel.swift in Sources */,
 				8C8A8D1B2BA1A14000414ADD /* HomeView.swift in Sources */,
+				8C8A8D1D2BA1B65400414ADD /* RegisterView.swift in Sources */,
 				8C8A8CE82BA18A5E00414ADD /* FestivalDuJeuApp.swift in Sources */,
 				8C8A8D192BA1962A00414ADD /* Benevole.swift in Sources */,
 			);
