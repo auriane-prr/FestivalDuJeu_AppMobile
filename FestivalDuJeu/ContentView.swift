@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @StateObject private var viewModel = AuthViewModel() // Utilisez @StateObject ici
 
-#Preview {
-    ContentView()
+    var body: some View {
+        Group {
+            if viewModel.isAuthenticated {
+                HomeView()
+                    .environmentObject(viewModel) // Injecter viewModel dans HomeView
+            } else {
+                LoginView()
+                    .environmentObject(viewModel) // Injecter viewModel dans LoginView
+            }
+        }
+        .id(viewModel.isAuthenticated)
+    }
 }

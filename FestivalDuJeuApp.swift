@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct FestivalDuJeuApp: App {
+    @StateObject var viewModel = AuthViewModel()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
+                .environmentObject(viewModel) // Passez l'instance de AuthViewModel à LoginView
         }
     }
 }
