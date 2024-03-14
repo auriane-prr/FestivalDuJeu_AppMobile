@@ -19,6 +19,6 @@ struct Benevole: Codable {
     var vegetarien: Bool
     var mail: String
     var hebergement: String
-    var adresse: String?
-    var num_telephone: String?
+    var adresse: String
+    var num_telephone: String
 }
