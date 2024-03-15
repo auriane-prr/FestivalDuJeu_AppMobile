@@ -7,25 +7,62 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct NavigationBarView: View {
     @EnvironmentObject private var viewModel: AuthViewModel
+    @State private var selectedTab = "accueil"
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("Bienvenue dans l'application !")
-                // Autres éléments de votre HomeView
-            }
-            .navigationTitle("Bienvenue \(viewModel.username)")
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        viewModel.logout() // S'assurer que cette méthode réinitialise `isAuthenticated` à `false`
-                    }) {
-                        Text("Logout")
-                    }
+        TabView(selection: $selectedTab) {
+
+            ParticiperView()
+                .tabItem {
+                    Label("Inscription", systemImage: "pencil")
                 }
+                .tag("inscription")
+
+            FlexibleView()
+                .tabItem {
+                    Label("Flexible", systemImage: "arrow.left.arrow.right")
+                }
+                .tag("flexible")
+            
+                AccueilView()
+                    .tabItem {
+                        Label("Accueil", systemImage: "house")
+                    }
+                    .tag("accueil")
+
+            PlanningView()
+                .tabItem {
+                    Label("Planning", systemImage: "calendar")
+                }
+                .tag("planning")
+
+            ProfilView()
+                .tabItem {
+                    Label("Profil", systemImage: "person")
+                }
+                .tag("profil")
+        }
+        .accentColor(.primary) // Modifier ici pour changer la couleur de l'icône sélectionnée
+        .navigationViewStyle(StackNavigationViewStyle())
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                logoutButton
             }
+        }
+        .onAppear {
+            selectedTab = "accueil" // Définir l'onglet par défaut si nécessaire
+        }
+    }
+
+    var logoutButton: some View {
+        Button(action: {
+            viewModel.logout() // Assurez-vous que cette action met à jour l'état d'authentification comme il se doit
+        }) {
+            Image(systemName: "power")
+                .accessibilityLabel("Logout")
         }
     }
 }
+

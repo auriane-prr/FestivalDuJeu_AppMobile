@@ -11,13 +11,38 @@ struct RegisterView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject private var viewModel = RegisterViewModel()
     @State private var isLoading = false
+    @State private var isGeneratingPseudo = false
+    
+    @State private var oldNom = ""
+    @State private var oldPrenom = ""
 
     var body: some View {
         NavigationView {
             Form {
-                TextField("Entrez votre nom", text: $viewModel.benevole.nom)
-                TextField("Entrez votre prénom", text: $viewModel.benevole.prenom)
+                TextField("Entrez votre nom", text: Binding(
+                    get: { viewModel.benevole.nom },
+                    set: { newValue in
+                        viewModel.benevole.nom = newValue
+                        if oldNom != newValue {
+                            oldNom = newValue
+                            viewModel.generatePseudoIfNeeded()
+                        }
+                    }
+                ))
+                  
+                TextField("Entrez votre prénom", text: Binding(
+                    get: { viewModel.benevole.prenom },
+                    set: { newValue in
+                        viewModel.benevole.prenom = newValue
+                        if oldPrenom != newValue {
+                            oldPrenom = newValue
+                            viewModel.generatePseudoIfNeeded()
+                        }
+                    }
+                ))
+                
                 TextField("Voici votre pseudo", text: $viewModel.benevole.pseudo)
+                    .disabled(true)
                 SecureField("Entrez votre mot de passe", text: $viewModel.benevole.password)
                 TextField("Entrez votre mail", text: $viewModel.benevole.mail)
                 TextField("Entrez votre association", text: $viewModel.benevole.association)
@@ -76,4 +101,10 @@ struct RegisterView: View {
             }
         }
     }
+    private func generatePseudo() {
+            viewModel.generatePseudoIfNeeded()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                isGeneratingPseudo = false
+            }
+        }
 }

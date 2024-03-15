@@ -16,7 +16,7 @@ struct LoginView: View {
         NavigationView {
             VStack {
                 if viewModel.isAuthenticated {
-                    HomeView()
+                    NavigationBarView()
                         .environmentObject(viewModel) // Passez l'instance de AuthViewModel à HomeView
                 } else {
                     // Interface de connexion

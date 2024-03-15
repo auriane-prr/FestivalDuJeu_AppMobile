@@ -15,7 +15,7 @@ struct FestivalDuJeuApp: App {
         WindowGroup {
             // Navigation conditionnelle basée sur l'état d'authentification
             if viewModel.isAuthenticated {
-                HomeView()
+                NavigationBarView()
                     .environmentObject(viewModel)
             } else {
                 LoginView()
