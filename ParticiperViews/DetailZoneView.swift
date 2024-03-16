@@ -1,34 +1,33 @@
 //
-//  DetailStand.swift
+//  DetailZoneView.swift
 //  FestivalDuJeu
 //
-//  Created by Auriane POIRIER on 15/03/2024.
+//  Created by Auriane POIRIER on 16/03/2024.
 //
 
 import SwiftUI
 
-struct DetailStandView: View {
+struct DetailZoneView: View {
     @EnvironmentObject private var authModel: AuthViewModel
-    @StateObject private var standModel = StandViewModel()
+    @StateObject private var zoneModel = ZoneViewModel()
+    
     @StateObject private var benevoleModel = BenevoleViewModel()
-    let stand: Stand
+    let zone: Zone
     let selectedHeure : String
-
+    
     var body: some View {
         VStack {
-            Text(stand.nomStand)
+            Text(zone.nomZone)
                 .font(.largeTitle)
-            Text(stand.description)
-                .padding()
             Button(action: {
                 benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
                     guard let benevoleId = benevoleId else {
                         print("Impossible de récupérer l'ID du bénévole.")
                         return
                     }
-                    if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
+                    if let horaireCota = zone.horaireCota.first(where: { $0.heure == selectedHeure }) {
                         let idHoraire = horaireCota.id
-                        standModel.participerAuStand(idBenevole: benevoleId, idHoraire: idHoraire) { success, errorMessage in
+                        zoneModel.participerALaZone(idBenevole: benevoleId, idHoraire: idHoraire) { success, errorMessage in
                             if success {
                                 print("Participation enregistrée avec succès.")
                             } else {
@@ -52,6 +51,3 @@ struct DetailStandView: View {
         }
     }
 }
-
-
-

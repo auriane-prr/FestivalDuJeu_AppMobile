@@ -71,5 +71,32 @@ class ZoneViewModel: ObservableObject {
             }
         }
     }
+    
+    func participerALaZone(idBenevole: String, idHoraire: String, completion: @escaping (Bool, String?) -> Void) {
+        print("id horaire : \(idHoraire)")
+        let token = UserDefaults.standard.string(forKey: "authToken") ?? ""
+        guard let url = URL(string: "https://festivaldujeuback.onrender.com/zoneBenevole/participer/\(idHoraire)/\(idBenevole)") else {
+            completion(false, "URL invalide pour l'inscription.")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+        URLSession.shared.dataTask(with: request) { _, response, error in
+            if let error = error {
+                completion(false, "Erreur lors de la participation : \(error.localizedDescription)")
+                return
+            }
+
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                completion(false, "Réponse invalide du serveur.")
+                return
+            }
+
+            completion(true, nil)  // Succès
+        }.resume()
+    }
 
 }

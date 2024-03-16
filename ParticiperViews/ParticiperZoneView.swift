@@ -35,7 +35,9 @@ struct ParticiperZoneView: View {
                         ForEach(heures, id: \.self) { heure in
                             Section(header: Text(heure)) {
                                 ForEach(zoneModel.zonesDisponiblesPourHeure(date: currentDate, heure: heure)) { zone in
-                                    Text(zone.nomZone)
+                                    NavigationLink(destination: DetailZoneView(zone: zone, selectedHeure: heure)) {
+                                        Text(zone.nomZone)
+                                    }
                                 }
                             }
                         }
