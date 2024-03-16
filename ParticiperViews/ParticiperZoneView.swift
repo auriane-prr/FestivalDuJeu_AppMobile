@@ -10,7 +10,7 @@ import SwiftUI
 struct ParticiperZoneView: View {
     @StateObject private var festivalModel = FestivalViewModel()
     @StateObject private var zoneModel = ZoneViewModel()
-    @State private var currentTime = Date()
+    @State private var currentDate = Date()
 
     let heures = ["9-11", "11-14", "14-17", "17-20", "20-22"]
 
@@ -27,10 +27,16 @@ struct ParticiperZoneView: View {
                     .pickerStyle(.segmented)
                     .frame(width: 300, height: 200, alignment: .center)
                     .clipped()
+                    .onReceive(festivalModel.$selectedDate) { newValue in
+                        zoneModel.fetchZonesByDate(date: newValue)
+                        currentDate = newValue
+                    }
                     List {
                         ForEach(heures, id: \.self) { heure in
                             Section(header: Text(heure)) {
-                                Text("Zones en cours de chargement")
+                                ForEach(zoneModel.zonesDisponiblesPourHeure(date: currentDate, heure: heure)) { zone in
+                                    Text(zone.nomZone)
+                                }
                             }
                         }
                     }
