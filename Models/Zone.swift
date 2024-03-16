@@ -9,18 +9,18 @@ import Foundation
 
 struct Zone: Codable, Identifiable {
     let id: String
-    let nomZoneBenevole: String
+    let nomZone: String
     let referents: [Referent]
-    let idZoneBenevole: String
+    let idZone: String
     let date: Date
-    let listeJeux: [Jeu] 
+    let listeJeux: [JeuID]
     let horaireCota: [HoraireCota]
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case nomZoneBenevole = "nom_zone_benevole"
+        case nomZone = "nom_zone_benevole"
         case referents
-        case idZoneBenevole = "id_zone_benevole"
+        case idZone = "id_zone_benevole"
         case date
         case listeJeux = "liste_jeux"
         case horaireCota
