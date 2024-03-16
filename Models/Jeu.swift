@@ -8,7 +8,7 @@
 import Foundation
 
 struct Jeu: Codable, Identifiable {
-    let id: String // Ajoutez cette ligne
+    let id: String 
     let nomJeu: String
     let editeur: String
     let type: String
@@ -25,7 +25,7 @@ struct Jeu: Codable, Identifiable {
     let logo: String?
 
     enum CodingKeys: String, CodingKey {
-        case id = "_id" // Ajoutez cette ligne
+        case id = "_id" 
         case nomJeu = "nom_jeu"
         case editeur
         case type
@@ -40,5 +40,18 @@ struct Jeu: Codable, Identifiable {
         case animationRequise = "animation_requise"
         case lien
         case logo
+    }
+}
+
+struct JeuID: Codable {
+    let id: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.id = try container.decode(String.self)
     }
 }
