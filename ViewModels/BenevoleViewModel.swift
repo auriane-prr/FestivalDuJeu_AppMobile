@@ -11,6 +11,8 @@ class BenevoleViewModel: ObservableObject {
     
     @Published var errorMessage: String?
     @Published var successMessage: String?
+    @Published var benevole: Benevole?
+    @Published var isLoading = false
     
     func getBenevoleId(pseudo: String, completion: @escaping (String?) -> Void) {
         print("je suis dans func getBenevoleId")
@@ -75,4 +77,40 @@ class BenevoleViewModel: ObservableObject {
             }
         }.resume()
     }
+    
+    func fetchBenevole(pseudo: String) {
+        print("fetchBenevole : \(pseudo)")
+        guard let url = URL(string: "https://festivaldujeuback.onrender.com/benevole/pseudo/\(pseudo)") else {
+            self.errorMessage = "URL invalide."
+            return
+        }
+
+        isLoading = true
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                if let error = error {
+                    self?.errorMessage = "Échec du chargement : \(error.localizedDescription)"
+                    print("echec du chargement")
+                    return
+                }
+                guard let data = data, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    self?.errorMessage = "Réponse invalide du serveur."
+                    print("réponse invalide du serveur")
+                    return
+                }
+                do {
+                    let decoder = JSONDecoder()
+                    let response = try decoder.decode(BenevoleResponse.self, from: data)
+                    self?.benevole = response.benevole
+                } catch {
+                    self?.errorMessage = "Échec de décodage : \(error.localizedDescription)"
+                    print("echec de decodage")
+                }
+            }
+        }
+        task.resume()
+    }
+
+    
 }
