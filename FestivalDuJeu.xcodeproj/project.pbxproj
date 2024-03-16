@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8C3C91E32BA45753001890E6 /* ParticiperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E22BA45753001890E6 /* ParticiperView.swift */; };
+		8C3C91E32BA45753001890E6 /* ParticiperStandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E22BA45753001890E6 /* ParticiperStandView.swift */; };
 		8C3C91E52BA45807001890E6 /* FlexibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E42BA45807001890E6 /* FlexibleView.swift */; };
 		8C3C91E72BA45830001890E6 /* AccueilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E62BA45830001890E6 /* AccueilView.swift */; };
 		8C3C91E92BA4584E001890E6 /* PlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E82BA4584E001890E6 /* PlanningView.swift */; };
@@ -20,6 +20,11 @@
 		8C3C91F92BA498FC001890E6 /* JaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91F82BA498FC001890E6 /* JaugeView.swift */; };
 		8C3C91FC2BA49CF6001890E6 /* DetailStandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91FB2BA49CF6001890E6 /* DetailStandView.swift */; };
 		8C3C91FE2BA4A1E9001890E6 /* StandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91FD2BA4A1E9001890E6 /* StandViewModel.swift */; };
+		8C61580B2BA5DF8800C9B025 /* ParticiperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61580A2BA5DF8800C9B025 /* ParticiperView.swift */; };
+		8C61580D2BA5E1F900C9B025 /* ParticiperZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61580C2BA5E1F900C9B025 /* ParticiperZoneView.swift */; };
+		8C61580F2BA5E20900C9B025 /* ZoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61580E2BA5E20900C9B025 /* ZoneViewModel.swift */; };
+		8C6158112BA5E30400C9B025 /* Zone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6158102BA5E30400C9B025 /* Zone.swift */; };
+		8C6158132BA5E38200C9B025 /* Jeu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6158122BA5E38200C9B025 /* Jeu.swift */; };
 		8C8A8CE82BA18A5E00414ADD /* FestivalDuJeuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */; };
 		8C8A8CEC2BA18A6000414ADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C8A8CEB2BA18A6000414ADD /* Assets.xcassets */; };
 		8C8A8CF02BA18A6000414ADD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C8A8CEF2BA18A6000414ADD /* Preview Assets.xcassets */; };
@@ -51,7 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8C3C91E22BA45753001890E6 /* ParticiperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticiperView.swift; sourceTree = "<group>"; };
+		8C3C91E22BA45753001890E6 /* ParticiperStandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticiperStandView.swift; sourceTree = "<group>"; };
 		8C3C91E42BA45807001890E6 /* FlexibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleView.swift; sourceTree = "<group>"; };
 		8C3C91E62BA45830001890E6 /* AccueilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccueilView.swift; sourceTree = "<group>"; };
 		8C3C91E82BA4584E001890E6 /* PlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningView.swift; sourceTree = "<group>"; };
@@ -64,6 +69,11 @@
 		8C3C91F82BA498FC001890E6 /* JaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaugeView.swift; sourceTree = "<group>"; };
 		8C3C91FB2BA49CF6001890E6 /* DetailStandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStandView.swift; sourceTree = "<group>"; };
 		8C3C91FD2BA4A1E9001890E6 /* StandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandViewModel.swift; sourceTree = "<group>"; };
+		8C61580A2BA5DF8800C9B025 /* ParticiperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticiperView.swift; sourceTree = "<group>"; };
+		8C61580C2BA5E1F900C9B025 /* ParticiperZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticiperZoneView.swift; sourceTree = "<group>"; };
+		8C61580E2BA5E20900C9B025 /* ZoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneViewModel.swift; sourceTree = "<group>"; };
+		8C6158102BA5E30400C9B025 /* Zone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zone.swift; sourceTree = "<group>"; };
+		8C6158122BA5E38200C9B025 /* Jeu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jeu.swift; sourceTree = "<group>"; };
 		8C8A8CE42BA18A5E00414ADD /* FestivalDuJeu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FestivalDuJeu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FestivalDuJeuApp.swift; sourceTree = "<group>"; };
 		8C8A8CEB2BA18A6000414ADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,6 +123,8 @@
 				8C3C91EE2BA46441001890E6 /* Festival.swift */,
 				8C3C91F42BA47E0E001890E6 /* Stand.swift */,
 				8C3C91F62BA48559001890E6 /* Referent.swift */,
+				8C6158102BA5E30400C9B025 /* Zone.swift */,
+				8C6158122BA5E38200C9B025 /* Jeu.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -124,6 +136,7 @@
 				8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */,
 				8C3C91F22BA4653F001890E6 /* FestivalViewModel.swift */,
 				8C3C91FD2BA4A1E9001890E6 /* StandViewModel.swift */,
+				8C61580E2BA5E20900C9B025 /* ZoneViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -132,8 +145,10 @@
 			isa = PBXGroup;
 			children = (
 				8C3C91F82BA498FC001890E6 /* JaugeView.swift */,
-				8C3C91E22BA45753001890E6 /* ParticiperView.swift */,
+				8C3C91E22BA45753001890E6 /* ParticiperStandView.swift */,
 				8C3C91FB2BA49CF6001890E6 /* DetailStandView.swift */,
+				8C61580A2BA5DF8800C9B025 /* ParticiperView.swift */,
+				8C61580C2BA5E1F900C9B025 /* ParticiperZoneView.swift */,
 			);
 			path = ParticiperViews;
 			sourceTree = "<group>";
@@ -338,7 +353,9 @@
 				8C3C91EF2BA46441001890E6 /* Festival.swift in Sources */,
 				8C3C91F52BA47E0E001890E6 /* Stand.swift in Sources */,
 				8C3C91F92BA498FC001890E6 /* JaugeView.swift in Sources */,
+				8C61580F2BA5E20900C9B025 /* ZoneViewModel.swift in Sources */,
 				8C8A8D132BA18C5200414ADD /* LoginView.swift in Sources */,
+				8C61580B2BA5DF8800C9B025 /* ParticiperView.swift in Sources */,
 				8C3C91F72BA48559001890E6 /* Referent.swift in Sources */,
 				8C3C91ED2BA45CC6001890E6 /* NavigationBarView.swift in Sources */,
 				8C3C91EB2BA45871001890E6 /* ProfilView.swift in Sources */,
@@ -347,10 +364,13 @@
 				8C3C91E72BA45830001890E6 /* AccueilView.swift in Sources */,
 				8C8A8D1D2BA1B65400414ADD /* RegisterView.swift in Sources */,
 				8C3C91FE2BA4A1E9001890E6 /* StandViewModel.swift in Sources */,
-				8C3C91E32BA45753001890E6 /* ParticiperView.swift in Sources */,
+				8C3C91E32BA45753001890E6 /* ParticiperStandView.swift in Sources */,
+				8C6158132BA5E38200C9B025 /* Jeu.swift in Sources */,
+				8C6158112BA5E30400C9B025 /* Zone.swift in Sources */,
 				8C3C91FC2BA49CF6001890E6 /* DetailStandView.swift in Sources */,
 				8C8A8CE82BA18A5E00414ADD /* FestivalDuJeuApp.swift in Sources */,
 				8C3C91E92BA4584E001890E6 /* PlanningView.swift in Sources */,
+				8C61580D2BA5E1F900C9B025 /* ParticiperZoneView.swift in Sources */,
 				8C8A8D192BA1962A00414ADD /* Benevole.swift in Sources */,
 				8C3C91F32BA4653F001890E6 /* FestivalViewModel.swift in Sources */,
 			);

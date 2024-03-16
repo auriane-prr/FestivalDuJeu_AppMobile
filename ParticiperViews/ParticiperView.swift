@@ -2,81 +2,65 @@
 //  ParticiperView.swift
 //  FestivalDuJeu
 //
-//  Created by Auriane POIRIER on 15/03/2024.
+//  Created by Auriane POIRIER on 16/03/2024.
 //
 
 import SwiftUI
 
 struct ParticiperView: View {
     @EnvironmentObject private var logoutModel: AuthViewModel
-    @StateObject private var festivalModel = FestivalViewModel()
-    @StateObject private var standModel = StandViewModel()
-    @State private var currentTime = Date()
-
-    let heures = ["9-11", "11-14", "14-17", "17-20", "20-22"]
+    @State private var isActiveStand = false
+    @State private var isActiveZone = false
 
     var body: some View {
         NavigationView {
             VStack {
-                if festivalModel.latestFestival != nil {
-                    Picker("Sélectionnez une date", selection: $festivalModel.selectedDate) {
-                        ForEach(festivalModel.selectableDates, id: \.self) { date in
-                            Text(formatDate(date: date))
-                                .tag(date)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .frame(width: 300, height: 200, alignment: .center)
-                    .clipped()
-                    .onReceive(festivalModel.$selectedDate) { newValue in
-                        standModel.fetchStandsByDate(date: newValue)
-                        currentTime = newValue
-                    }
-                    List {
-                        ForEach(heures, id: \.self) { heure in
-                            Section(header: Text(heure)) {
-                                ForEach(standModel.standsDisponiblesPourHeure(date: currentTime, heure: heure)) { stand in
-                                    NavigationLink(destination: DetailStandView(stand: stand, selectedHeure : heure)) {
-                                        HStack {
-                                            Text(stand.nomStand)
-//                                                JaugeView(capaciteTotale: stand.horaireCota.first(where: { cota in cota.heure == heure })?.nbBenevole ?? 0,
-//                                                    nombreInscrits: stand.horaireCota.first(where: { cota in cota.heure == heure })?.listeBenevole?.count ?? 0,
-//                                                    heureDebut: String(heure.split(separator: "-")[0]),
-//                                                    heureFin: String(heure.split(separator: "-")[1]))
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    ProgressView()
+                Button(action: {
+                    self.isActiveStand = true
+                }) {
+                    Text("Stand")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
                 }
-            }
-            .onAppear {
-                festivalModel.loadLatestFestival()
-            }
-            .navigationTitle("Inscription")
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    logoutButton
+                .buttonStyle(PlainButtonStyle())
+
+                Button(action: {
+                    self.isActiveZone = true
+                }) {
+                    Text("Zones")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .navigationTitle("Où veux-tu t'inscrire ?")
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        logoutButton
+                    }
+                }
+                .sheet(isPresented: $isActiveStand) {
+                    ParticiperStandView()
+                }
+                .sheet(isPresented: $isActiveZone) {
+                    ParticiperZoneView()
                 }
             }
         }
     }
 
-    private func formatDate(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        return dateFormatter.string(from: date)
-    }
-
     var logoutButton: some View {
         Button(action: {
-            logoutModel.logout() // Assurez-vous que cette action met à jour l'état d'authentification comme il se doit
+            logoutModel.logout()
         }) {
             Text("Logout")
         }
     }
 }
-
