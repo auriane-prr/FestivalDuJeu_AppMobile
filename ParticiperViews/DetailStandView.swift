@@ -20,6 +20,24 @@ struct DetailStandView: View {
             Text(stand.description)
                 .padding()
             Button(action: {
+                standModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
+                    guard let benevoleId = benevoleId else {
+                        print("Impossible de récupérer l'ID du bénévole.")
+                        return
+                    }
+                    if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
+                        let idHoraire = horaireCota.id
+                        standModel.participerAuStand(idBenevole: benevoleId, idHoraire: idHoraire) { success, errorMessage in
+                            if success {
+                                print("Participation enregistrée avec succès.")
+                            } else {
+                                print("Erreur lors de la tentative de participation : \(errorMessage ?? "Erreur inconnue")")
+                            }
+                        }
+                    } else {
+                        print("Aucun horaire correspondant à \(selectedHeure) trouvé.")
+                    }
+                }
             }) {
                 Text("Participer")
                     .font(.headline)
