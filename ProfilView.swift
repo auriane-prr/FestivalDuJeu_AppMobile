@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ProfilView: View {
+    @StateObject var authViewModel = AuthViewModel()
+
     var body: some View {
         NavigationView {
-                    Text("Écran de profil")
-                        .navigationTitle("Profil")
-                        // Ajoutez le reste de votre contenu ici
-                }
+            Text("Vous êtes sur la page profil")
+            .navigationTitle("Profil")
+        }
     }
 }

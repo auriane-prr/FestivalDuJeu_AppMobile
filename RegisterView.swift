@@ -66,7 +66,11 @@ struct RegisterView: View {
                 }
                 
                 TextField("Entrez votre numéro de téléphone (optionnel)", text: $viewModel.benevole.num_telephone)
-                TextField("Entrez votre adresse (optionnel)", text: $viewModel.benevole.adresse)
+                TextField("Entrez votre adresse (optionnel)", text: Binding(
+                    get: { viewModel.benevole.adresse ?? "" },
+                    set: { viewModel.benevole.adresse = $0 }
+                ))
+
 
                 Button("Register") {
                     if viewModel.isFormValid() {

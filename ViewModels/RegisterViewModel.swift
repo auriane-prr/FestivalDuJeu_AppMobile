@@ -8,7 +8,7 @@
 import Foundation
 
 class RegisterViewModel: ObservableObject {
-    @Published var benevole = Benevole(admin: false, referent: false, nom: "", prenom: "", pseudo: "", password: "", association: "", taille_tshirt: "", vegetarien: false, mail: "", hebergement: "", adresse: "", num_telephone: "")
+    @Published var benevole = Benevole(_id: "", admin: false, referent: false, nom: "", prenom: "", password: "", pseudo: "", association: "", taille_tshirt: "", vegetarien: false, mail: "", hebergement: "", num_telephone: "", adresse: "")
     
     @Published var errorMessage: String = ""
     @Published var successMessage: String? = ""
@@ -49,7 +49,7 @@ class RegisterViewModel: ObservableObject {
                 self.successMessage = "Inscription réussie. Veuillez vous connecter."
                 print("inscription réussie")
                 // Vous pouvez choisir de réinitialiser les champs ici
-                self.benevole = Benevole(admin: false, referent: false, nom: "", prenom: "", pseudo: "", password: "", association: "", taille_tshirt: "", vegetarien: false, mail: "", hebergement: "", adresse: "", num_telephone: "")
+                self.benevole = Benevole(_id: "", admin: false, referent: false, nom: "", prenom: "", password: "", pseudo: "", association: "", taille_tshirt: "", vegetarien: false, mail: "", hebergement: "", num_telephone: "", adresse: "")
             }
         } catch {
             DispatchQueue.main.async {
