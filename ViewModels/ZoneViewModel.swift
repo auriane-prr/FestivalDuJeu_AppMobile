@@ -73,7 +73,6 @@ class ZoneViewModel: ObservableObject {
     }
     
     func participerALaZone(idBenevole: String, idHoraire: String, completion: @escaping (Bool, String?) -> Void) {
-        print("id horaire : \(idHoraire)")
         let token = UserDefaults.standard.string(forKey: "authToken") ?? ""
         guard let url = URL(string: "https://festivaldujeuback.onrender.com/zoneBenevole/participer/\(idHoraire)/\(idBenevole)") else {
             completion(false, "URL invalide pour l'inscription.")

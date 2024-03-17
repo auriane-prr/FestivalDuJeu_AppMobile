@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ParticiperView: View {
-    @EnvironmentObject private var logoutModel: AuthViewModel
     @State private var isActiveStand = false
     @State private var isActiveZone = false
 
@@ -41,11 +40,6 @@ struct ParticiperView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .navigationTitle("Où veux-tu t'inscrire ?")
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        logoutButton
-                    }
-                }
                 .sheet(isPresented: $isActiveStand) {
                     ParticiperStandView()
                 }
@@ -56,11 +50,4 @@ struct ParticiperView: View {
         }
     }
 
-    var logoutButton: some View {
-        Button(action: {
-            logoutModel.logout()
-        }) {
-            Text("Logout")
-        }
-    }
 }

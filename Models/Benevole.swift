@@ -27,3 +27,16 @@ struct Benevole: Codable {
 struct BenevoleResponse: Codable {
     var benevole: Benevole
 }
+
+struct BenevoleUpdate: Codable {
+    var nom: String?
+    var prenom: String?
+    var association: String?
+    var taille_tshirt: String?
+    var vegetarien: Bool?
+    var mail: String?
+    var num_telephone: String?
+    var hebergement: String?
+    var adresse: String?
+}
+

@@ -19,27 +19,9 @@ struct RegisterView: View {
     var body: some View {
         NavigationView {
             Form {
-                TextField("Entrez votre nom", text: Binding(
-                    get: { viewModel.benevole.nom },
-                    set: { newValue in
-                        viewModel.benevole.nom = newValue
-                        if oldNom != newValue {
-                            oldNom = newValue
-                            viewModel.generatePseudoIfNeeded()
-                        }
-                    }
-                ))
+                TextField("Entrez votre nom", text: $viewModel.benevole.nom)
                   
-                TextField("Entrez votre prénom", text: Binding(
-                    get: { viewModel.benevole.prenom },
-                    set: { newValue in
-                        viewModel.benevole.prenom = newValue
-                        if oldPrenom != newValue {
-                            oldPrenom = newValue
-                            viewModel.generatePseudoIfNeeded()
-                        }
-                    }
-                ))
+                TextField("Entrez votre prénom", text: $viewModel.benevole.prenom)
                 
                 TextField("Voici votre pseudo", text: $viewModel.benevole.pseudo)
                     .disabled(true)
