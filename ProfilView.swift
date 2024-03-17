@@ -20,6 +20,8 @@ struct ProfilView: View {
     @State private var num_telephone: String = ""
     @State private var hebergement: String = ""
     @State private var adresse: String = ""
+    @State private var selectionVegetarienString: String = "Non"
+
     
     @State private var isEditing = false
     
@@ -32,53 +34,56 @@ struct ProfilView: View {
                     
                     Form {
                         HStack {
-                            Text("Nom:")
+                            Text("Nom :")
                                 .frame(width: 100, alignment: .leading)
                             TextField("", text: $nom)
                                 .disabled(!isEditing)
                         }
                         HStack {
-                            Text("Prénom:")
+                            Text("Prénom :")
                                 .frame(width: 100, alignment: .leading)
                             TextField("", text: $prenom)
                                 .disabled(!isEditing)
                         }
                         HStack {
-                            Text("Association:")
+                            Text("Association :")
                                 .frame(width: 100, alignment: .leading)
                             TextField("", text: $association)
                                 .disabled(!isEditing)
                         }
-                        HStack {
-                            Text("Végétarien:")
-                                .frame(width: 100, alignment: .leading)
-                            Text(vegetarien ? "Oui" : "Non")
-                                .disabled(!isEditing)
+                        Picker("Végétarien : ", selection: $selectionVegetarienString) {
+                            Text("Oui").tag("Oui")
+                            Text("Non").tag("Non")
                         }
+                        .disabled(!isEditing)
+
+                        
+                            Picker("Taille de tee-shirt : ", selection: $taille_tshirt) {
+                                ForEach(["XS", "S", "M", "L", "XL", "XXL"], id: \.self) { taille_tshirt in
+                                    Text(taille_tshirt).tag(taille_tshirt)
+                                }
+                            }
+                            .disabled(!isEditing)
+                        
                         HStack {
-                            Text("Taille de tee-shirt:")
-                                .frame(width: 100, alignment: .leading)
-                            TextField("", text: $taille_tshirt)
-                                .disabled(!isEditing)
-                        }
-                        HStack {
-                            Text("E-mail:")
+                            Text("E-mail :")
                                 .frame(width: 100, alignment: .leading)
                             TextField("", text: $mail)
                                 .disabled(!isEditing)
                         }
                         HStack {
-                            Text("Numéro de téléphone:")
+                            Text("Numéro de téléphone :")
                                 .frame(width: 100, alignment: .leading)
                             TextField("", text: $num_telephone)
                                 .disabled(!isEditing)
                         }
-                        HStack {
-                            Text("Hébergement:")
-                                .frame(width: 100, alignment: .leading)
-                            TextField("", text: $hebergement)
-                                .disabled(!isEditing)
-                        }
+                            Picker("Hébergement :", selection: $hebergement) {
+                                ForEach(["Rien", "Recherche", "Proposition"], id: \.self) { hebergement in
+                                    Text(hebergement).tag(hebergement)
+                                }
+                            }
+                            .disabled(!isEditing)
+                        
                         HStack {
                             Text("Adresse:")
                                 .frame(width: 100, alignment: .leading)
@@ -111,7 +116,9 @@ struct ProfilView: View {
             .onAppear {
                 let pseudo = authModel.username
                 benevoleModel.fetchBenevole(pseudo: pseudo)
+                selectionVegetarienString = benevoleModel.benevole?.vegetarien ?? false ? "Oui" : "Non"
             }
+
             .onReceive(benevoleModel.$benevole) { benevole in
                 updateFields(with: benevole)
             }
@@ -126,7 +133,7 @@ struct ProfilView: View {
                                             prenom: prenom,
                                             association: association,
                                             taille_tshirt: taille_tshirt,
-                                            vegetarien: vegetarien,
+                                            vegetarien: selectionVegetarienString,
                                             mail: mail,
                                             num_telephone: num_telephone,
                                             hebergement: hebergement,

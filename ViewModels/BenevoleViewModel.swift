@@ -119,18 +119,18 @@ class BenevoleViewModel: ObservableObject {
         let token = UserDefaults.standard.string(forKey: "authToken") ?? ""
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
-        let updateData = [
-                "nom": update.nom ?? benevole.nom,
-                "prenom": update.prenom ?? benevole.prenom,
-                "pseudo": benevole.pseudo, // Le pseudo est nécessaire pour l'URL, mais ne doit pas être modifié
-                "association": update.association ?? benevole.association,
-                "taille_tshirt": update.taille_tshirt ?? benevole.taille_tshirt,
-                "vegetarien": update.vegetarien ?? benevole.vegetarien,
-                "mail": update.mail ?? benevole.mail,
-                "hebergement": update.hebergement ?? benevole.hebergement,
-                "num_telephone": update.num_telephone ?? benevole.num_telephone,
-                "adresse": update.adresse ?? benevole.adresse
-            ].compactMapValues { $0 }
+        let updateData: [String: Any] = [
+            "nom": update.nom ?? benevole.nom,
+            "prenom": update.prenom ?? benevole.prenom,
+            "pseudo": benevole.pseudo,
+            "association": update.association ?? benevole.association,
+            "taille_tshirt": update.taille_tshirt ?? benevole.taille_tshirt,
+            "vegetarien": update.vegetarien ?? benevole.vegetarien,
+            "mail": update.mail ?? benevole.mail,
+            "hebergement": update.hebergement ?? benevole.hebergement,
+            "num_telephone": update.num_telephone ?? benevole.num_telephone,
+            "adresse": update.adresse ?? benevole.adresse ?? ""
+        ]
 
         do {
                 let jsonData = try JSONSerialization.data(withJSONObject: updateData)

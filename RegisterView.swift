@@ -34,7 +34,6 @@ struct RegisterView: View {
                     Text("Non").tag(false)
                 }
 
-
                 Picker("Sélectionnez une taille", selection: $viewModel.benevole.taille_tshirt) {
                     ForEach(["XS", "S", "M", "L", "XL", "XXL"], id: \.self) { taille_tshirt in
                         Text(taille_tshirt).tag(taille_tshirt)

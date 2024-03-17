@@ -33,7 +33,7 @@ struct BenevoleUpdate: Codable {
     var prenom: String?
     var association: String?
     var taille_tshirt: String?
-    var vegetarien: Bool?
+    var vegetarien: String?
     var mail: String?
     var num_telephone: String?
     var hebergement: String?
