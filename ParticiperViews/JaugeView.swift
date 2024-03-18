@@ -12,31 +12,21 @@ struct JaugeView: View {
     let nombreInscrits: Int
 
     var body: some View {
-        let pourcentageRemplissage = capaciteTotale > 0 ? CGFloat(nombreInscrits) / CGFloat(capaciteTotale) * 100 : 0
-        
-        let fillingColor: Color = {
-            if pourcentageRemplissage == 100 {
-                return .green
-            } else if pourcentageRemplissage > 0 {
-                return .yellow
-            } else {
-                return .red
-            }
-        }()
-
-        return ZStack(alignment: .leading) {
-            Rectangle()
-                .foregroundColor(.gray)
-                .frame(height: 20)
-            Rectangle()
-                .foregroundColor(fillingColor)
-                .frame(width: pourcentageRemplissage * (UIScreen.main.bounds.width / CGFloat(capaciteTotale)), height: 20)
-            HStack {
-                Spacer()
-                Text("\(nombreInscrits)/\(capaciteTotale)")
-            }
+        Gauge(value: Double(nombreInscrits), in: 0...Double(capaciteTotale)) {
+        } currentValueLabel: {
+            Text("\(nombreInscrits)/\(capaciteTotale)")
         }
-        .contentShape(Rectangle())
+    }
+    
+    private func couleurDeRemplissage() -> Color {
+        let pourcentageRemplissage = Double(nombreInscrits) / Double(capaciteTotale)
+        switch pourcentageRemplissage {
+        case 0..<0.5:
+            return .red
+        case 0.5..<1.0:
+            return .yellow
+        default:
+            return .green
+        }
     }
 }
-

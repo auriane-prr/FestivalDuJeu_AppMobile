@@ -36,7 +36,12 @@ struct ParticiperZoneView: View {
                             Section(header: Text(heure)) {
                                 ForEach(zoneModel.zonesDisponiblesPourHeure(date: currentDate, heure: heure)) { zone in
                                     NavigationLink(destination: DetailZoneView(zone: zone, selectedHeure: heure)) {
-                                        Text(zone.nomZone)
+                                        HStack {
+                                            Text(zone.nomZone)
+                                            Spacer()
+                                            JaugeView(capaciteTotale: zone.horaireCota.first(where: { $0.heure == heure })?.nbBenevole ?? 0,
+                                                                                              nombreInscrits: zone.horaireCota.first(where: { $0.heure == heure })?.listeBenevole?.count ?? 0)
+                                        }
                                     }
                                 }
                             }

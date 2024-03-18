@@ -30,7 +30,7 @@ struct ProfilView: View {
             VStack {
                 if let benevole = benevoleModel.benevole {
                     Text("Bienvenue, \(benevole.pseudo)")
-                        .font(.headline)
+                        .font(.title)
                     
                     Form {
                         HStack {
@@ -122,7 +122,6 @@ struct ProfilView: View {
             .onReceive(benevoleModel.$benevole) { benevole in
                 updateFields(with: benevole)
             }
-            .navigationTitle("Profil")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                             ToolbarItemGroup(placement: .navigationBarTrailing) {

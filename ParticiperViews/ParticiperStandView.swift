@@ -38,10 +38,9 @@ struct ParticiperStandView: View {
                                     NavigationLink(destination: DetailStandView(stand: stand, selectedHeure : heure)) {
                                         HStack {
                                             Text(stand.nomStand)
-//                                                JaugeView(capaciteTotale: stand.horaireCota.first(where: { cota in cota.heure == heure })?.nbBenevole ?? 0,
-//                                                    nombreInscrits: stand.horaireCota.first(where: { cota in cota.heure == heure })?.listeBenevole?.count ?? 0,
-//                                                    heureDebut: String(heure.split(separator: "-")[0]),
-//                                                    heureFin: String(heure.split(separator: "-")[1]))
+                                            Spacer()
+                                            JaugeView(capaciteTotale: stand.horaireCota.first(where: { $0.heure == heure })?.nbBenevole ?? 0,
+                                                                                              nombreInscrits: stand.horaireCota.first(where: { $0.heure == heure })?.listeBenevole?.count ?? 0)
                                         }
                                     }
                                 }
