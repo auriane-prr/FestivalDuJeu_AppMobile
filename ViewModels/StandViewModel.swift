@@ -13,6 +13,7 @@ class StandViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var successMessage: String?
+    @Published var selectedStandsPerHour: [String: [String]] = [:]
     
     func fetchStandsByDate(date: Date) {
         let dateString = DateFormatter.iso8601Full.string(from: date)
