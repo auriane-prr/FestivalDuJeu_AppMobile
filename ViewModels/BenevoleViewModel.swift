@@ -266,7 +266,7 @@ class BenevoleViewModel: ObservableObject {
                     [
                         "date": horaire.date,
                         "heure": horaire.heure,
-                        "liste_zone": horaire.listeZone
+                        "liste_zoneBenevole": horaire.listeZone
                     ]
                 }
             ]

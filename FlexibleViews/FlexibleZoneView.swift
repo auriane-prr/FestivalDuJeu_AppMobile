@@ -1,21 +1,19 @@
 //
-//  FlexibleView.swift
+//  FlexibleZoneView.swift
 //  FestivalDuJeu
 //
-//  Created by Auriane POIRIER on 15/03/2024.
+//  Created by Auriane POIRIER on 19/03/2024.
 //
 
 import SwiftUI
 
-struct FlexibleView: View {
+struct FlexibleZoneView: View {
     @EnvironmentObject private var authModel: AuthViewModel
     @StateObject private var festivalModel = FestivalViewModel()
-    @StateObject private var standModel = StandViewModel()
     @StateObject private var zoneModel = ZoneViewModel()
     @StateObject private var benevoleModel = BenevoleViewModel()
     @State private var currentDate = Date()
 
-    @State private var selectedStandIds: Set<String> = []
     @State private var selectedZoneIds: Set<String> = []
     @State private var selectedHeure: String? = nil
 
@@ -33,7 +31,6 @@ struct FlexibleView: View {
                     .pickerStyle(.segmented)
                     .padding()
                     .onReceive(festivalModel.$selectedDate) { newValue in
-                        standModel.fetchStandsByDate(date: newValue)
                         zoneModel.fetchZonesByDate(date: newValue)
                         currentDate = newValue
                     }
@@ -49,30 +46,10 @@ struct FlexibleView: View {
                     .clipped()
 
                     if let selectedHeure = selectedHeure {
-                        // Sélection des stands
-                        Text("Sélectionnez un ou plusieurs stands pour \(selectedHeure):")
-                        ScrollView {
-                            ForEach(standModel.stands, id: \.id) { stand in
-                                Button(action: {
-                                    if selectedStandIds.contains(stand.id) {
-                                        selectedStandIds.remove(stand.id)
-                                    } else {
-                                        selectedStandIds.insert(stand.id)
-                                    }
-                                }) {
-                                    HStack {
-                                        Image(systemName: selectedStandIds.contains(stand.id) ? "checkmark.square" : "square")
-                                        Text(stand.nomStand)
-                                    }
-                                }
-                                .foregroundColor(.primary)
-                            }
-                        }
-
                         // Sélection des zones
                         Text("Sélectionnez une ou plusieurs zones pour \(selectedHeure):")
                         ScrollView {
-                            ForEach(zoneModel.zones, id: \.id) { zone in
+                            ForEach(zoneModel.zonesDisponiblesPourHeure(date: currentDate, heure: selectedHeure), id: \.id) { zone in
                                 Button(action: {
                                     if selectedZoneIds.contains(zone.id) {
                                         selectedZoneIds.remove(zone.id)
@@ -99,14 +76,6 @@ struct FlexibleView: View {
 
                 // Affichage des sélections
                 Text("Sélections :")
-                if !selectedStandIds.isEmpty {
-                    Text("Stands Sélectionnés :")
-                    ForEach(Array(selectedStandIds), id: \.self) { id in
-                        if let stand = standModel.stands.first(where: { $0.id == id }) {
-                            Text(stand.nomStand)
-                        }
-                    }
-                }
 
                 if !selectedZoneIds.isEmpty {
                     Text("Zones Sélectionnées :")
@@ -135,20 +104,6 @@ struct FlexibleView: View {
                         if selectedDate.isEmpty {
                             print("La date sélectionnée est invalide")
                             return
-                        }
-
-                        // Créez les structures pour les horaires des stands
-                        let horairesStands = selectedStandIds.map { standId -> FlexibleStand in
-                            return FlexibleStand(date: selectedDate, heure: selectedHeure, listeStand: [standId]) // Assurez-vous que la listeStand prend des ID sous forme de String
-                        }
-
-                        // Appel de la fonction ajouterFlexibleAuStand
-                        benevoleModel.ajouterFlexibleAuStand(benevoleId: benevoleId, horaires: horairesStands) { success, message in
-                            if success {
-                                print("Succès de l'ajout aux stands")
-                            } else {
-                                print("Erreur lors de l'ajout aux stands: \(message ?? "Erreur inconnue")")
-                            }
                         }
 
                         // Créez les structures pour les horaires des zones
@@ -186,7 +141,3 @@ struct FlexibleView: View {
         return dateFormatter.string(from: date)
     }
 }
-
-
-
-

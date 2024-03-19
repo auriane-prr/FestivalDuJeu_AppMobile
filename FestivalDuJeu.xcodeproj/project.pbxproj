@@ -29,6 +29,8 @@
 		8C6158172BA5E83D00C9B025 /* DetailZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6158162BA5E83D00C9B025 /* DetailZoneView.swift */; };
 		8C6158192BA5E8F500C9B025 /* BenevoleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6158182BA5E8F500C9B025 /* BenevoleViewModel.swift */; };
 		8C7CC3FF2BA9E12700BD12D2 /* Flexibles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC3FE2BA9E12700BD12D2 /* Flexibles.swift */; };
+		8C7CC4022BA9EE5D00BD12D2 /* FlexibleStandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC4012BA9EE5D00BD12D2 /* FlexibleStandView.swift */; };
+		8C7CC4042BA9EE6B00BD12D2 /* FlexibleZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC4032BA9EE6B00BD12D2 /* FlexibleZoneView.swift */; };
 		8C8A8CE82BA18A5E00414ADD /* FestivalDuJeuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */; };
 		8C8A8CEC2BA18A6000414ADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C8A8CEB2BA18A6000414ADD /* Assets.xcassets */; };
 		8C8A8CF02BA18A6000414ADD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C8A8CEF2BA18A6000414ADD /* Preview Assets.xcassets */; };
@@ -82,6 +84,8 @@
 		8C6158162BA5E83D00C9B025 /* DetailZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailZoneView.swift; sourceTree = "<group>"; };
 		8C6158182BA5E8F500C9B025 /* BenevoleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenevoleViewModel.swift; sourceTree = "<group>"; };
 		8C7CC3FE2BA9E12700BD12D2 /* Flexibles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flexibles.swift; sourceTree = "<group>"; };
+		8C7CC4012BA9EE5D00BD12D2 /* FlexibleStandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleStandView.swift; sourceTree = "<group>"; };
+		8C7CC4032BA9EE6B00BD12D2 /* FlexibleZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleZoneView.swift; sourceTree = "<group>"; };
 		8C8A8CE42BA18A5E00414ADD /* FestivalDuJeu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FestivalDuJeu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FestivalDuJeuApp.swift; sourceTree = "<group>"; };
 		8C8A8CEB2BA18A6000414ADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -165,9 +169,20 @@
 			path = ParticiperViews;
 			sourceTree = "<group>";
 		};
+		8C7CC4002BA9EE2F00BD12D2 /* FlexibleViews */ = {
+			isa = PBXGroup;
+			children = (
+				8C3C91E42BA45807001890E6 /* FlexibleView.swift */,
+				8C7CC4012BA9EE5D00BD12D2 /* FlexibleStandView.swift */,
+				8C7CC4032BA9EE6B00BD12D2 /* FlexibleZoneView.swift */,
+			);
+			path = FlexibleViews;
+			sourceTree = "<group>";
+		};
 		8C8A8CDB2BA18A5E00414ADD = {
 			isa = PBXGroup;
 			children = (
+				8C7CC4002BA9EE2F00BD12D2 /* FlexibleViews */,
 				8C3C91FA2BA49CB9001890E6 /* ParticiperViews */,
 				8C3C91F12BA46522001890E6 /* ViewModels */,
 				8C3C91F02BA46462001890E6 /* Models */,
@@ -175,7 +190,6 @@
 				8C3C91EA2BA45871001890E6 /* ProfilView.swift */,
 				8C3C91E82BA4584E001890E6 /* PlanningView.swift */,
 				8C3C91E62BA45830001890E6 /* AccueilView.swift */,
-				8C3C91E42BA45807001890E6 /* FlexibleView.swift */,
 				8C8A8D1C2BA1B65400414ADD /* RegisterView.swift */,
 				8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */,
 				8C8A8D122BA18C5200414ADD /* LoginView.swift */,
@@ -378,6 +392,7 @@
 				8C6158172BA5E83D00C9B025 /* DetailZoneView.swift in Sources */,
 				8C3C91E72BA45830001890E6 /* AccueilView.swift in Sources */,
 				8C8A8D1D2BA1B65400414ADD /* RegisterView.swift in Sources */,
+				8C7CC4042BA9EE6B00BD12D2 /* FlexibleZoneView.swift in Sources */,
 				8C3C91FE2BA4A1E9001890E6 /* StandViewModel.swift in Sources */,
 				8C3C91E32BA45753001890E6 /* ParticiperStandView.swift in Sources */,
 				8C6158132BA5E38200C9B025 /* Jeu.swift in Sources */,
@@ -389,6 +404,7 @@
 				8C7CC3FF2BA9E12700BD12D2 /* Flexibles.swift in Sources */,
 				8C8A8D192BA1962A00414ADD /* Benevole.swift in Sources */,
 				8C3C91F32BA4653F001890E6 /* FestivalViewModel.swift in Sources */,
+				8C7CC4022BA9EE5D00BD12D2 /* FlexibleStandView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
