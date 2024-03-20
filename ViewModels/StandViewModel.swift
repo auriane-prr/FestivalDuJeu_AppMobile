@@ -98,4 +98,5 @@ class StandViewModel: ObservableObject {
                 }.resume()
             }
 
+
 }

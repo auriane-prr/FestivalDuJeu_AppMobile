@@ -40,6 +40,9 @@ class ZoneViewModel: ObservableObject {
                     print("réponse invalide du serveur")
                     return
                 }
+                
+                let jsonResponseString = String(data: data, encoding: .utf8)
+                print("Réponse JSON brute zone: \(jsonResponseString ?? "Invalid JSON")")
 
                 do {
                     let decoder = JSONDecoder()
@@ -99,49 +102,5 @@ class ZoneViewModel: ObservableObject {
         }.resume()
     }
     
-    func ajouterFlexibleALaZone(zoneId: String, horaire: String, idBenevole: String, completion: @escaping (Bool, String?) -> Void) {
-        print("flexible zone")
-        let token = UserDefaults.standard.string(forKey: "authToken") ?? ""
-        guard let url = URL(string: "https://festivaldujeuback.onrender.com/zoneBenevole/inscrire/\(zoneId)/\(horaire)/\(idBenevole)") else {
-            DispatchQueue.main.async {
-                completion(false, "URL invalide pour ajouter un bénévole flexible.")
-            }
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    completion(false, "Erreur lors de l'ajout d'un bénévole flexible : \(error.localizedDescription)")
-                }
-                return
-            }
-
-            guard let httpResponse = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    completion(false, "Réponse invalide du serveur.")
-                    print("réponse invalide du serveur")
-                }
-                return
-            }
-
-            if httpResponse.statusCode == 200 {
-                DispatchQueue.main.async {
-                    completion(true, "Bénévole ajouté avec succès au stand.")
-                    print("bénévole flexible")
-                }
-            } else {
-                // Traiter les réponses autres que 200 OK ici. Vous pouvez également décoder le message d'erreur JSON si nécessaire.
-                DispatchQueue.main.async {
-                    completion(false, "Échec de l'ajout du bénévole. Code de statut : \(httpResponse.statusCode)")
-                    print("échec de l'ajout. Code de statut : \(httpResponse.statusCode)")
-                }
-            }
-        }.resume()
-    }
 
 }

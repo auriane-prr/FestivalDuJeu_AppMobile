@@ -16,7 +16,6 @@
 		8C3C91EF2BA46441001890E6 /* Festival.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91EE2BA46441001890E6 /* Festival.swift */; };
 		8C3C91F32BA4653F001890E6 /* FestivalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91F22BA4653F001890E6 /* FestivalViewModel.swift */; };
 		8C3C91F52BA47E0E001890E6 /* Stand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91F42BA47E0E001890E6 /* Stand.swift */; };
-		8C3C91F72BA48559001890E6 /* Referent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91F62BA48559001890E6 /* Referent.swift */; };
 		8C3C91F92BA498FC001890E6 /* JaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91F82BA498FC001890E6 /* JaugeView.swift */; };
 		8C3C91FC2BA49CF6001890E6 /* DetailStandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91FB2BA49CF6001890E6 /* DetailStandView.swift */; };
 		8C3C91FE2BA4A1E9001890E6 /* StandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91FD2BA4A1E9001890E6 /* StandViewModel.swift */; };
@@ -31,6 +30,8 @@
 		8C7CC3FF2BA9E12700BD12D2 /* Flexibles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC3FE2BA9E12700BD12D2 /* Flexibles.swift */; };
 		8C7CC4022BA9EE5D00BD12D2 /* FlexibleStandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC4012BA9EE5D00BD12D2 /* FlexibleStandView.swift */; };
 		8C7CC4042BA9EE6B00BD12D2 /* FlexibleZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC4032BA9EE6B00BD12D2 /* FlexibleZoneView.swift */; };
+		8C7CC4062BAB103600BD12D2 /* Creneau.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC4052BAB103600BD12D2 /* Creneau.swift */; };
+		8C7CC4082BAB382000BD12D2 /* PlanningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CC4072BAB382000BD12D2 /* PlanningViewModel.swift */; };
 		8C8A8CE82BA18A5E00414ADD /* FestivalDuJeuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */; };
 		8C8A8CEC2BA18A6000414ADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C8A8CEB2BA18A6000414ADD /* Assets.xcassets */; };
 		8C8A8CF02BA18A6000414ADD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C8A8CEF2BA18A6000414ADD /* Preview Assets.xcassets */; };
@@ -42,6 +43,8 @@
 		8C8A8D192BA1962A00414ADD /* Benevole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D182BA1962A00414ADD /* Benevole.swift */; };
 		8C8A8D1D2BA1B65400414ADD /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D1C2BA1B65400414ADD /* RegisterView.swift */; };
 		8C8A8D1F2BA1CCF900414ADD /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */; };
+		8C8F0F172BAB694300C99146 /* BenevoleId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F0F162BAB694300C99146 /* BenevoleId.swift */; };
+		8C8F0F192BAB6A6400C99146 /* Planning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F0F182BAB6A6400C99146 /* Planning.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +74,6 @@
 		8C3C91EE2BA46441001890E6 /* Festival.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Festival.swift; sourceTree = "<group>"; };
 		8C3C91F22BA4653F001890E6 /* FestivalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FestivalViewModel.swift; sourceTree = "<group>"; };
 		8C3C91F42BA47E0E001890E6 /* Stand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stand.swift; sourceTree = "<group>"; };
-		8C3C91F62BA48559001890E6 /* Referent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Referent.swift; sourceTree = "<group>"; };
 		8C3C91F82BA498FC001890E6 /* JaugeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JaugeView.swift; sourceTree = "<group>"; };
 		8C3C91FB2BA49CF6001890E6 /* DetailStandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStandView.swift; sourceTree = "<group>"; };
 		8C3C91FD2BA4A1E9001890E6 /* StandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandViewModel.swift; sourceTree = "<group>"; };
@@ -86,6 +88,8 @@
 		8C7CC3FE2BA9E12700BD12D2 /* Flexibles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flexibles.swift; sourceTree = "<group>"; };
 		8C7CC4012BA9EE5D00BD12D2 /* FlexibleStandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleStandView.swift; sourceTree = "<group>"; };
 		8C7CC4032BA9EE6B00BD12D2 /* FlexibleZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleZoneView.swift; sourceTree = "<group>"; };
+		8C7CC4052BAB103600BD12D2 /* Creneau.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Creneau.swift; sourceTree = "<group>"; };
+		8C7CC4072BAB382000BD12D2 /* PlanningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningViewModel.swift; sourceTree = "<group>"; };
 		8C8A8CE42BA18A5E00414ADD /* FestivalDuJeu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FestivalDuJeu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C8A8CE72BA18A5E00414ADD /* FestivalDuJeuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FestivalDuJeuApp.swift; sourceTree = "<group>"; };
 		8C8A8CEB2BA18A6000414ADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 		8C8A8D182BA1962A00414ADD /* Benevole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Benevole.swift; sourceTree = "<group>"; };
 		8C8A8D1C2BA1B65400414ADD /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		8C8F0F162BAB694300C99146 /* BenevoleId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenevoleId.swift; sourceTree = "<group>"; };
+		8C8F0F182BAB6A6400C99146 /* Planning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planning.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,11 +140,13 @@
 				8C8A8D182BA1962A00414ADD /* Benevole.swift */,
 				8C3C91EE2BA46441001890E6 /* Festival.swift */,
 				8C3C91F42BA47E0E001890E6 /* Stand.swift */,
-				8C3C91F62BA48559001890E6 /* Referent.swift */,
 				8C6158102BA5E30400C9B025 /* Zone.swift */,
 				8C6158122BA5E38200C9B025 /* Jeu.swift */,
 				8C6158142BA5E82100C9B025 /* HoraireCota.swift */,
 				8C7CC3FE2BA9E12700BD12D2 /* Flexibles.swift */,
+				8C7CC4052BAB103600BD12D2 /* Creneau.swift */,
+				8C8F0F162BAB694300C99146 /* BenevoleId.swift */,
+				8C8F0F182BAB6A6400C99146 /* Planning.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -152,6 +160,7 @@
 				8C3C91FD2BA4A1E9001890E6 /* StandViewModel.swift */,
 				8C61580E2BA5E20900C9B025 /* ZoneViewModel.swift */,
 				8C6158182BA5E8F500C9B025 /* BenevoleViewModel.swift */,
+				8C7CC4072BAB382000BD12D2 /* PlanningViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -377,13 +386,15 @@
 			files = (
 				8C8A8D172BA192CF00414ADD /* AuthViewModel.swift in Sources */,
 				8C3C91EF2BA46441001890E6 /* Festival.swift in Sources */,
+				8C7CC4062BAB103600BD12D2 /* Creneau.swift in Sources */,
+				8C8F0F192BAB6A6400C99146 /* Planning.swift in Sources */,
 				8C3C91F52BA47E0E001890E6 /* Stand.swift in Sources */,
 				8C3C91F92BA498FC001890E6 /* JaugeView.swift in Sources */,
 				8C61580F2BA5E20900C9B025 /* ZoneViewModel.swift in Sources */,
 				8C6158152BA5E82100C9B025 /* HoraireCota.swift in Sources */,
 				8C8A8D132BA18C5200414ADD /* LoginView.swift in Sources */,
+				8C8F0F172BAB694300C99146 /* BenevoleId.swift in Sources */,
 				8C61580B2BA5DF8800C9B025 /* ParticiperView.swift in Sources */,
-				8C3C91F72BA48559001890E6 /* Referent.swift in Sources */,
 				8C6158192BA5E8F500C9B025 /* BenevoleViewModel.swift in Sources */,
 				8C3C91ED2BA45CC6001890E6 /* NavigationBarView.swift in Sources */,
 				8C3C91EB2BA45871001890E6 /* ProfilView.swift in Sources */,
@@ -395,6 +406,7 @@
 				8C7CC4042BA9EE6B00BD12D2 /* FlexibleZoneView.swift in Sources */,
 				8C3C91FE2BA4A1E9001890E6 /* StandViewModel.swift in Sources */,
 				8C3C91E32BA45753001890E6 /* ParticiperStandView.swift in Sources */,
+				8C7CC4082BAB382000BD12D2 /* PlanningViewModel.swift in Sources */,
 				8C6158132BA5E38200C9B025 /* Jeu.swift in Sources */,
 				8C6158112BA5E30400C9B025 /* Zone.swift in Sources */,
 				8C3C91FC2BA49CF6001890E6 /* DetailStandView.swift in Sources */,

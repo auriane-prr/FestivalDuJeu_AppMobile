@@ -8,13 +8,13 @@
 import Foundation
 
 struct HoraireCota: Codable {
-    let id: String // Ajoutez cette ligne
+    let id: String
     let heure: String
     let nbBenevole: Int?
-    let listeBenevole: [Referent]? // Modifié pour correspondre au type attendu d'identifiants
-
+    let listeBenevole: [BenevoleId]?
+    
     enum CodingKeys: String, CodingKey {
-        case id = "_id" // Ajoutez cette ligne
+        case id = "_id" // Ajouté
         case heure
         case nbBenevole = "nb_benevole"
         case listeBenevole = "liste_benevole"
