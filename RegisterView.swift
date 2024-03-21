@@ -15,19 +15,21 @@ struct RegisterView: View {
     
     @State private var oldNom = ""
     @State private var oldPrenom = ""
+    
+    let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
 
     var body: some View {
         NavigationView {
             Form {
-                TextField("Entrez votre nom", text: $viewModel.benevole.nom)
+                Text("Merci de vous joindre à nous pour cette nouvelle édition du Festival du Jeu à Montpellier !")
+                TextField("Votre nom", text: $viewModel.benevole.nom)
                   
-                TextField("Entrez votre prénom", text: $viewModel.benevole.prenom)
+                TextField("Votre prénom", text: $viewModel.benevole.prenom)
                 
-                TextField("Voici votre pseudo", text: $viewModel.benevole.pseudo)
-                    .disabled(true)
-                SecureField("Entrez votre mot de passe", text: $viewModel.benevole.password)
-                TextField("Entrez votre mail", text: $viewModel.benevole.mail)
-                TextField("Entrez votre association", text: $viewModel.benevole.association)
+                TextField("Votre pseudo", text: $viewModel.benevole.pseudo)
+                SecureField("Votre mot de passe", text: $viewModel.benevole.password)
+                TextField("Votre mail", text: $viewModel.benevole.mail)
+                TextField("Votre association", text: $viewModel.benevole.association)
                 
                 Picker("Êtes-vous végétarien ?", selection: $viewModel.benevole.vegetarien) {
                     Text("Oui").tag(true)
@@ -46,29 +48,33 @@ struct RegisterView: View {
                     }
                 }
                 
-                TextField("Entrez votre numéro de téléphone (optionnel)", text: $viewModel.benevole.num_telephone)
-                TextField("Entrez votre adresse (optionnel)", text: Binding(
+                TextField("Votre numéro de téléphone (optionnel)", text: $viewModel.benevole.num_telephone)
+                TextField("Votre adresse (optionnel)", text: Binding(
                     get: { viewModel.benevole.adresse ?? "" },
                     set: { viewModel.benevole.adresse = $0 }
                 ))
 
 
-                Button("Register") {
-                    if viewModel.isFormValid() {
-                        isLoading = true
-                        Task {
-                            await viewModel.register()
-                            isLoading = false
+                HStack(spacing: 0) {
+                    Spacer()
+                    Button("Je m'inscris") {
+                        if viewModel.isFormValid() {
+                            isLoading = true
+                            Task {
+                                await viewModel.register()
+                                isLoading = false
+                            }
+                        } else {
+                            viewModel.errorMessage = "Veuillez remplir tous les champs requis."
                         }
-                    } else {
-                        viewModel.errorMessage = "Veuillez remplir tous les champs requis."
                     }
+                        .foregroundColor(.white)
+                        .frame(width: 200, height: 50)
+                        .background(Color(customColor))
+                        .cornerRadius(8)
+                        .disabled(isLoading)
+                    Spacer()
                 }
-                .foregroundColor(.white)
-                .frame(width: 200, height: 50)
-                .background(Color.blue)
-                .cornerRadius(8)
-                .disabled(isLoading)
 
                 if !viewModel.errorMessage.isEmpty {
                     Text(viewModel.errorMessage)
@@ -76,6 +82,15 @@ struct RegisterView: View {
                 }
             }
             .navigationTitle("Inscription")
+                    
+                    .overlay(
+                        Image("logo_court")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 80, height: 80)
+                            .offset(x: 180, y: -80) // Ajustez l'offset selon vos besoins
+                    , alignment: .topLeading
+                    )
             .onAppear {
                 if viewModel.benevole.hebergement.isEmpty {
                     viewModel.benevole.hebergement = "Rien"
