@@ -11,6 +11,8 @@ struct LoginView: View {
     @EnvironmentObject private var viewModel: AuthViewModel
     @State private var username: String = ""
     @State private var password: String = ""
+    
+    let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
 
     var body: some View {
         NavigationView {
@@ -21,13 +23,32 @@ struct LoginView: View {
                 } else {
                     // Interface de connexion
                     ScrollView {
-                        VStack {
-                            TextField("Username", text: $username)
+                            VStack {
+                                if let image = UIImage(named: "nom_app") {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 500, height: 200)
+                                        .padding(.bottom, -80)
+                                }
+
+                                if let logo = UIImage(named: "logo_court") {
+                                    Image(uiImage: logo)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 200, height: 150)
+                                }
+                            }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                            
+                            TextField("Pseudo", text: $username)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .frame(width: 350)
                                 .padding()
                             
-                            SecureField("Password", text: $password)
+                            SecureField("Mot de passe", text: $password)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .frame(width: 350)
                                 .padding()
                             
                             if !viewModel.errorMessage.isEmpty {
@@ -35,29 +56,27 @@ struct LoginView: View {
                                     .foregroundColor(.red)
                             }
                             
-                            Button("Login") {
+                            Button("Je me connecte") {
                                 Task {
                                     await viewModel.login(username: username, password: password)
                                 }
                             }
                             .foregroundColor(.white)
                             .frame(width: 200, height: 50)
-                            .background(Color.blue)
+                            .background(Color(customColor))
                             .cornerRadius(8)
                             .padding()
                             
                             // Ajouter un NavigationLink ici
                             NavigationLink(destination: RegisterView()) {
-                                Text("Pas encore inscrit ? Inscrivez-vous ici")
-                                    .foregroundColor(.blue)
+                                Text("Si tu n’as pas encore de compte, tu peux en créer un ici ")
+                                    .foregroundColor(Color(customColor))
                                     .padding()
+                                    .frame(width: 400)
                             }
                         }
                     }
                 }
             }
-            .navigationBarHidden(true) // Pour cacher la barre de navigation si vous ne souhaitez pas l'afficher
-        }
     }
 }
-
