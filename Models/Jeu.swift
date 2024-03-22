@@ -55,3 +55,10 @@ struct JeuID: Codable {
         self.id = try container.decode(String.self)
     }
 }
+
+struct ZoneJeu: Identifiable {
+    let id = UUID() // Identifiant unique pour conformer à Identifiable
+    let nomJeu: String
+    let nomZone: String
+}
+

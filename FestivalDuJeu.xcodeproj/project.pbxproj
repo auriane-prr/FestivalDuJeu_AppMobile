@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C1FFF622BADBE59008449A8 /* JeuxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1FFF612BADBE59008449A8 /* JeuxViewModel.swift */; };
 		8C3C91E32BA45753001890E6 /* ParticiperStandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E22BA45753001890E6 /* ParticiperStandView.swift */; };
 		8C3C91E52BA45807001890E6 /* FlexibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E42BA45807001890E6 /* FlexibleView.swift */; };
 		8C3C91E72BA45830001890E6 /* AccueilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C91E62BA45830001890E6 /* AccueilView.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C1FFF612BADBE59008449A8 /* JeuxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JeuxViewModel.swift; sourceTree = "<group>"; };
 		8C3C91E22BA45753001890E6 /* ParticiperStandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticiperStandView.swift; sourceTree = "<group>"; };
 		8C3C91E42BA45807001890E6 /* FlexibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleView.swift; sourceTree = "<group>"; };
 		8C3C91E62BA45830001890E6 /* AccueilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccueilView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				8C61580E2BA5E20900C9B025 /* ZoneViewModel.swift */,
 				8C6158182BA5E8F500C9B025 /* BenevoleViewModel.swift */,
 				8C7CC4072BAB382000BD12D2 /* PlanningViewModel.swift */,
+				8C1FFF612BADBE59008449A8 /* JeuxViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			files = (
 				8C8A8D172BA192CF00414ADD /* AuthViewModel.swift in Sources */,
 				8C3C91EF2BA46441001890E6 /* Festival.swift in Sources */,
+				8C1FFF622BADBE59008449A8 /* JeuxViewModel.swift in Sources */,
 				8C7CC4062BAB103600BD12D2 /* Creneau.swift in Sources */,
 				8C8F0F192BAB6A6400C99146 /* Planning.swift in Sources */,
 				8C3C91F52BA47E0E001890E6 /* Stand.swift in Sources */,
