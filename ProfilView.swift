@@ -107,6 +107,7 @@ struct ProfilView: View {
                                 .disabled(!isEditing)
                         }
                     }
+                    .frame(height : 500)
                 } else if benevoleModel.isLoading {
                     ProgressView()
                 } else {
@@ -131,7 +132,8 @@ struct ProfilView: View {
                                 .foregroundColor(.white)
                                 .background(Color(customColor))
                                 .cornerRadius(8)
-                                .padding(.bottom)
+                                .padding(.bottom, 20)
+                                .padding(.top, 20)
                                 .alert(isPresented: $showingLogoutAlert) {
                                     Alert(
                                         title: Text("Modifications non enregistrées"),
