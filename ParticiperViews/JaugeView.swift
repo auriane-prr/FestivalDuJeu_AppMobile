@@ -10,23 +10,12 @@ import SwiftUI
 struct JaugeView: View {
     let capaciteTotale: Int
     let nombreInscrits: Int
+    
+    let customColor = Color(UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8))
 
     var body: some View {
-        Gauge(value: Double(nombreInscrits), in: 0...Double(capaciteTotale)) {
-        } currentValueLabel: {
-            Text("\(nombreInscrits)/\(capaciteTotale)")
-        }
-    }
-    
-    private func couleurDeRemplissage() -> Color {
-        let pourcentageRemplissage = Double(nombreInscrits) / Double(capaciteTotale)
-        switch pourcentageRemplissage {
-        case 0..<0.5:
-            return .red
-        case 0.5..<1.0:
-            return .yellow
-        default:
-            return .green
-        }
+        ProgressView(value: Double(nombreInscrits), total: Double(capaciteTotale))
+                        .progressViewStyle(LinearProgressViewStyle(tint: customColor))
+                        .scaleEffect(x: 1, y: 2, anchor: .center)
     }
 }

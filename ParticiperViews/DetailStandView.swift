@@ -11,47 +11,103 @@ struct DetailStandView: View {
     @EnvironmentObject private var authModel: AuthViewModel
     @StateObject private var standModel = StandViewModel()
     @StateObject private var benevoleModel = BenevoleViewModel()
+    @State private var referentPseudos: [String: String] = [:] // ID → Pseudo
+    
     let stand: Stand
-    let selectedHeure : String
-
+    let selectedHeure: String
+    
+    let customColor = Color(UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8))
+    
     var body: some View {
-        VStack {
-            Text(stand.nomStand)
-                .font(.largeTitle)
-            Text(stand.description)
-                .padding()
-            Button(action: {
-                benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
-                    guard let benevoleId = benevoleId else {
-                        print("Impossible de récupérer l'ID du bénévole.")
-                        return
-                    }
-                    if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
-                        let idHoraire = horaireCota.id
-                        standModel.participerAuStand(idBenevole: benevoleId, idHoraire: idHoraire) { success, errorMessage in
-                            if success {
-                                print("Participation enregistrée avec succès.")
+        ScrollView {
+            VStack {
+                Text("\(stand.nomStand) : \(selectedHeure)")
+                    .font(.largeTitle)
+                    .padding(.bottom, 20)
+                
+                Form {
+                                   Section {
+                                       Text("Description : \(stand.description)")
+                                       
+                                       if !stand.referents.isEmpty {
+                                           HStack {
+                                               Text("Référents :")
+                                               ForEach(stand.referents, id: \.id) { referent in
+                                                   Text(referentPseudos[referent.id, default: "Chargement du pseudo..."])
+                                               }
+                                           }
+                                       }
+                                       
+                                       if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
+                                           Text("Nombre de bénévoles requis au stand : \(horaireCota.nbBenevole ?? 0)")
+                                           
+                                           if let listeBenevole = horaireCota.listeBenevole, !listeBenevole.isEmpty {
+                                               Text("Liste des bénévoles déjà inscrits:")
+                                               ForEach(listeBenevole, id: \.id) { benevole in
+                                                   Text(self.referentPseudos[benevole.id, default: "Chargement du pseudo..."])
+                                               }
+                                           } else {
+                                               Text("Aucun bénévole inscrit pour cet horaire.")
+                                           }
+                                       }
+                                   }
+                               }
+                               .frame(height: 400)
+                    
+                    Button(action: {
+                        benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
+                            guard let benevoleId = benevoleId else {
+                                print("Impossible de récupérer l'ID du bénévole.")
+                                return
+                            }
+                            if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
+                                let idHoraire = horaireCota.id
+                                standModel.participerAuStand(idBenevole: benevoleId, idHoraire: idHoraire) { success, errorMessage in
+                                    if success {
+                                        print("Participation enregistrée avec succès.")
+                                    } else {
+                                        print("Erreur lors de la tentative de participation : \(errorMessage ?? "Erreur inconnue")")
+                                    }
+                                }
                             } else {
-                                print("Erreur lors de la tentative de participation : \(errorMessage ?? "Erreur inconnue")")
+                                print("Aucun horaire correspondant à \(selectedHeure) trouvé.")
                             }
                         }
-                    } else {
-                        print("Aucun horaire correspondant à \(selectedHeure) trouvé.")
+                    }) {
+                        Text("Participer")
+                            .foregroundColor(.white)
+                            .frame(width: 300, height: 50)
+                            .background(customColor)
+                            .cornerRadius(8)
+                            
+                    }
+                    .padding(.top, 20)
+                }
+        }
+            .onAppear {
+                for referent in stand.referents {
+                    benevoleModel.fetchPseudoById(id: referent.id) { pseudo in
+                        if let pseudo = pseudo {
+                            DispatchQueue.main.async {
+                                self.referentPseudos[referent.id] = pseudo
+                            }
+                        }
                     }
                 }
-            }) {
-                Text("Participer")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                
+                if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }), let listeBenevole = horaireCota.listeBenevole {
+                    for benevole in listeBenevole {
+                        benevoleModel.fetchPseudoById(id: benevole.id) { pseudo in
+                            if let pseudo = pseudo {
+                                DispatchQueue.main.async {
+                                    self.referentPseudos[benevole.id] = pseudo
+                                }
+                            }
+                        }
+                    }
+                }
             }
-
+            
         }
-    }
+    
 }
-
-
-

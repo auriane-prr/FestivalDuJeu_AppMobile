@@ -14,3 +14,7 @@ struct BenevoleId: Codable, Identifiable {
         case id = "_id"
     }
 }
+
+struct BenevolePseudoResponse: Codable {
+    let pseudo: String
+}

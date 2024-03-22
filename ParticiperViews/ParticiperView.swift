@@ -10,36 +10,43 @@ import SwiftUI
 struct ParticiperView: View {
     @State private var isActiveStand = false
     @State private var isActiveZone = false
+    
+    let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
 
     var body: some View {
         NavigationView {
             VStack {
-                Button(action: {
+                if let image = UIImage(named: "logo") {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 300, height: 150)
+                        .offset(y : -30)
+                }
+                
+                Text("Où veux-tu t'inscrire ?")
+                    .font(.title)
+                    .padding(.bottom, 40)
+                
+                Button("Stands") {
                     self.isActiveStand = true
-                }) {
-                    Text("Stand")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
                 }
-                .buttonStyle(PlainButtonStyle())
+                .foregroundColor(.white)
+                .frame(width: 300, height: 200)
+                .background(Color(customColor))
+                .cornerRadius(8)
 
-                Button(action: {
+                Button("Zones") {
                     self.isActiveZone = true
-                }) {
-                    Text("Zones")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
                 }
-                .buttonStyle(PlainButtonStyle())
-                .navigationTitle("Où veux-tu t'inscrire ?")
+                .foregroundColor(.white)
+                .frame(width: 300, height: 200)
+                .background(Color(customColor))
+                .cornerRadius(8)
+                
+                    
+                
+                
                 .sheet(isPresented: $isActiveStand) {
                     ParticiperStandView()
                 }
@@ -50,4 +57,7 @@ struct ParticiperView: View {
         }
     }
 
+}
+#Preview{
+    ParticiperView()
 }

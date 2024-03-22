@@ -312,5 +312,49 @@ class BenevoleViewModel: ObservableObject {
                 }
             }.resume()
         }
+    
+    func fetchPseudoById(id: String, completion: @escaping (String?) -> Void) {
+            let urlString = "https://festivaldujeuback.onrender.com/benevole/id/\(id)"
+            guard let url = URL(string: urlString) else {
+                DispatchQueue.main.async {
+                    self.errorMessage = "URL invalide pour récupérer le pseudo."
+                }
+                return
+            }
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            let token = UserDefaults.standard.string(forKey: "authToken") ?? ""
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    DispatchQueue.main.async {
+                        self.errorMessage = "Erreur réseau : \(error.localizedDescription)"
+                    }
+                    return
+                }
+                
+                guard let data = data, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    DispatchQueue.main.async {
+                        self.errorMessage = "Réponse invalide du serveur."
+                    }
+                    return
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let response = try decoder.decode(BenevolePseudoResponse.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(response.pseudo)
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.errorMessage = "Erreur lors du décodage de la réponse : \(error.localizedDescription)"
+                        completion(nil)
+                    }
+                }
+            }.resume()
+        }
 
 }

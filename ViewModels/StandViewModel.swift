@@ -86,15 +86,18 @@ class StandViewModel: ObservableObject {
                 URLSession.shared.dataTask(with: request) { _, response, error in
                     if let error = error {
                         completion(false, "Erreur lors de la participation : \(error.localizedDescription)")
+                        print("Erreur lors de la participation : \(error.localizedDescription)")
                         return
                     }
 
                     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                         completion(false, "Réponse invalide du serveur.")
+                        print("Réponse invalide du serveur.")
                         return
                     }
 
-                    completion(true, nil)  // Succès
+                    completion(true, nil)
+                    print("votre participation a été enregistré")
                 }.resume()
             }
 
