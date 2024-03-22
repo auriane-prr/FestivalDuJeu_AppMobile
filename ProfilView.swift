@@ -22,15 +22,31 @@ struct ProfilView: View {
     @State private var adresse: String = ""
     @State private var selectionVegetarienString: String = "Non"
 
-    
     @State private var isEditing = false
+    @State private var showingLogoutAlert = false
+    @State private var showSuccessMessage = false
+    
+    let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
     
     var body: some View {
         NavigationView { // Assurez-vous que NavigationView enveloppe tout le contenu
             VStack {
                 if let benevole = benevoleModel.benevole {
-                    Text("Bienvenue, \(benevole.pseudo)")
+                    Text("Bienvenue \(benevole.pseudo) !")
                         .font(.title)
+                    
+                    if let successMessage = benevoleModel.successMessage {
+                                Text(successMessage)
+                                    .foregroundColor(.green)
+                                    .padding()
+                                    .transition(.opacity)
+                                    .onAppear {
+                                        // Efface successMessage après 5 secondes
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                            benevoleModel.successMessage = nil
+                                        }
+                                    }
+                            }
                     
                     Form {
                         HStack {
@@ -101,26 +117,43 @@ struct ProfilView: View {
                                     Text("Erreur : \(errorMessage)")
                                         .foregroundColor(.red)
                                 }
-                                
-                                if let successMessage = benevoleModel.successMessage {
-                                    Text(successMessage)
-                                        .foregroundColor(.blue)
-                                }
                 
-                Button("Déconnexion", action: authModel.logout)
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color.red)
-                    .cornerRadius(8)
+                Button("Déconnexion") {
+                                    if isEditing {
+                                        // Si l'utilisateur est en train d'éditer, afficher une alerte au lieu de déconnecter directement
+                                        showingLogoutAlert = true
+                                    } else {
+                                        // Sinon, procéder à la déconnexion
+                                        authModel.logout()
+                                    }
+                                }
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color(customColor))
+                                .cornerRadius(8)
+                                .padding(.bottom)
+                                .alert(isPresented: $showingLogoutAlert) {
+                                    Alert(
+                                        title: Text("Modifications non enregistrées"),
+                                        message: Text("Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir vous déconnecter ?"),
+                                        primaryButton: .destructive(Text("Déconnexion")) {
+                                            authModel.logout()
+                                        },
+                                        secondaryButton: .cancel()
+                                    )
+                                }
+                Spacer()
             }
             .onAppear {
                 let pseudo = authModel.username
                 benevoleModel.fetchBenevole(pseudo: pseudo)
                 selectionVegetarienString = benevoleModel.benevole?.vegetarien ?? false ? "Oui" : "Non"
+                
             }
 
             .onReceive(benevoleModel.$benevole) { benevole in
                 updateFields(with: benevole)
+                
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
