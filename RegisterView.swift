@@ -21,39 +21,41 @@ struct RegisterView: View {
     var body: some View {
         NavigationView {
             Form {
-                Text("Merci de vous joindre à nous pour cette nouvelle édition du Festival du Jeu à Montpellier !")
-                TextField("Votre nom", text: $viewModel.benevole.nom)
-                  
-                TextField("Votre prénom", text: $viewModel.benevole.prenom)
-                
-                TextField("Votre pseudo", text: $viewModel.benevole.pseudo)
-                SecureField("Votre mot de passe", text: $viewModel.benevole.password)
-                TextField("Votre mail", text: $viewModel.benevole.mail)
-                TextField("Votre association", text: $viewModel.benevole.association)
-                
-                Picker("Êtes-vous végétarien ?", selection: $viewModel.benevole.vegetarien) {
-                    Text("Oui").tag(true)
-                    Text("Non").tag(false)
-                }
-
-                Picker("Sélectionnez une taille", selection: $viewModel.benevole.taille_tshirt) {
-                    ForEach(["XS", "S", "M", "L", "XL", "XXL"], id: \.self) { taille_tshirt in
-                        Text(taille_tshirt).tag(taille_tshirt)
+                Section(header : Text("Informations obligatoires :")) {
+                    Text("Merci de vous joindre à nous pour cette nouvelle édition du Festival du Jeu à Montpellier !")
+                    TextField("Votre nom", text: $viewModel.benevole.nom)
+                    
+                    TextField("Votre prénom", text: $viewModel.benevole.prenom)
+                    
+                    TextField("Votre pseudo", text: $viewModel.benevole.pseudo)
+                    SecureField("Votre mot de passe", text: $viewModel.benevole.password)
+                    TextField("Votre mail", text: $viewModel.benevole.mail)
+                    TextField("Votre association", text: $viewModel.benevole.association)
+                    
+                    Picker("Êtes-vous végétarien ?", selection: $viewModel.benevole.vegetarien) {
+                        Text("Oui").tag(true)
+                        Text("Non").tag(false)
+                    }
+                    
+                    Picker("Sélectionnez une taille", selection: $viewModel.benevole.taille_tshirt) {
+                        ForEach(["XS", "S", "M", "L", "XL", "XXL"], id: \.self) { taille_tshirt in
+                            Text(taille_tshirt).tag(taille_tshirt)
+                        }
+                    }
+                    
+                    Picker("Sélectionnez une option d'hébergement", selection: $viewModel.benevole.hebergement) {
+                        ForEach(["Rien", "Recherche", "Proposition"], id: \.self) { hebergement in
+                            Text(hebergement).tag(hebergement)
+                        }
                     }
                 }
-                
-                Picker("Sélectionnez une option d'hébergement", selection: $viewModel.benevole.hebergement) {
-                    ForEach(["Rien", "Recherche", "Proposition"], id: \.self) { hebergement in
-                        Text(hebergement).tag(hebergement)
-                    }
+                Section(header : Text("Informations falcultatives :")) {
+                    TextField("Votre numéro de téléphone (optionnel)", text: $viewModel.benevole.num_telephone)
+                    TextField("Votre adresse (optionnel)", text: Binding(
+                        get: { viewModel.benevole.adresse ?? "" },
+                        set: { viewModel.benevole.adresse = $0 }
+                    ))
                 }
-                
-                TextField("Votre numéro de téléphone (optionnel)", text: $viewModel.benevole.num_telephone)
-                TextField("Votre adresse (optionnel)", text: Binding(
-                    get: { viewModel.benevole.adresse ?? "" },
-                    set: { viewModel.benevole.adresse = $0 }
-                ))
-
 
                 HStack(spacing: 0) {
                     Spacer()

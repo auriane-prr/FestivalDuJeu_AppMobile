@@ -25,7 +25,7 @@ struct ParticiperView: View {
                 }
                 
                 Text("Où veux-tu t'inscrire ?")
-                    .font(.title)
+                    .font(.largeTitle)
                     .padding(.bottom, 40)
                 
                 Button("Stands") {

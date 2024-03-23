@@ -15,6 +15,7 @@ class ZoneViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var successMessage: String?
     @Published var selectedZonesPerHour: [String: [String]] = [:]
+    @Published var jeux: [Jeu] = []
     
     func fetchZonesByDate(date: Date) {
         let dateString = DateFormatter.iso8601Full.string(from: date)
@@ -40,9 +41,6 @@ class ZoneViewModel: ObservableObject {
                     print("réponse invalide du serveur")
                     return
                 }
-                
-                let jsonResponseString = String(data: data, encoding: .utf8)
-                print("Réponse JSON brute zone: \(jsonResponseString ?? "Invalid JSON")")
 
                 do {
                     let decoder = JSONDecoder()
@@ -102,5 +100,38 @@ class ZoneViewModel: ObservableObject {
         }.resume()
     }
     
+    func fetchJeuxByZone(idZone: String) {
+        print("Zone : \(idZone)")
+            guard let url = URL(string: "https://festivaldujeuback.onrender.com/zoneBenevole/\(idZone)/jeux") else {
+                DispatchQueue.main.async {
+                    self.errorMessage = "L'URL pour récupérer les jeux est invalide."
+                }
+                return
+            }
 
+            isLoading = true
+            URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                DispatchQueue.main.async {
+                    self?.isLoading = false
+                    if let error = error {
+                        self?.errorMessage = "Échec du chargement des jeux : \(error.localizedDescription)"
+                        print("Échec du chargement des jeux : \(error.localizedDescription)")
+                        return
+                    }
+                    guard let data = data else {
+                        self?.errorMessage = "Aucune donnée reçue."
+                        print("Aucune donnée reçue.")
+                        return
+                    }
+                    
+                    do {
+                        let jeux = try JSONDecoder().decode([Jeu].self, from: data)
+                        self?.jeux = jeux
+                    } catch {
+                        self?.errorMessage = "Échec de décodage des jeux : \(error.localizedDescription)"
+                        print("Échec de décodage des jeux : \(error.localizedDescription)")
+                    }
+                }
+            }.resume()
+        }
 }

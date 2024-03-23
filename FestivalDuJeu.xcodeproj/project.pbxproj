@@ -46,6 +46,7 @@
 		8C8A8D1F2BA1CCF900414ADD /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */; };
 		8C8F0F172BAB694300C99146 /* BenevoleId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F0F162BAB694300C99146 /* BenevoleId.swift */; };
 		8C8F0F192BAB6A6400C99146 /* Planning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F0F182BAB6A6400C99146 /* Planning.swift */; };
+		8CDB0D9F2BAEE4A4002A43F0 /* DetailJeuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDB0D9E2BAEE4A4002A43F0 /* DetailJeuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +110,7 @@
 		8C8A8D1E2BA1CCF900414ADD /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		8C8F0F162BAB694300C99146 /* BenevoleId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenevoleId.swift; sourceTree = "<group>"; };
 		8C8F0F182BAB6A6400C99146 /* Planning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planning.swift; sourceTree = "<group>"; };
+		8CDB0D9E2BAEE4A4002A43F0 /* DetailJeuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailJeuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 				8C61580A2BA5DF8800C9B025 /* ParticiperView.swift */,
 				8C61580C2BA5E1F900C9B025 /* ParticiperZoneView.swift */,
 				8C6158162BA5E83D00C9B025 /* DetailZoneView.swift */,
+				8CDB0D9E2BAEE4A4002A43F0 /* DetailJeuView.swift */,
 			);
 			path = ParticiperViews;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				8C3C91F52BA47E0E001890E6 /* Stand.swift in Sources */,
 				8C3C91F92BA498FC001890E6 /* JaugeView.swift in Sources */,
 				8C61580F2BA5E20900C9B025 /* ZoneViewModel.swift in Sources */,
+				8CDB0D9F2BAEE4A4002A43F0 /* DetailJeuView.swift in Sources */,
 				8C6158152BA5E82100C9B025 /* HoraireCota.swift in Sources */,
 				8C8A8D132BA18C5200414ADD /* LoginView.swift in Sources */,
 				8C8F0F172BAB694300C99146 /* BenevoleId.swift in Sources */,

@@ -8,7 +8,7 @@
 import Foundation
 
 struct Jeu: Codable, Identifiable {
-    let id: String 
+    let id: String
     let nomJeu: String
     let editeur: String
     let type: String
@@ -20,28 +20,38 @@ struct Jeu: Codable, Identifiable {
     let description: String
     let recu: Bool
     let nbJoueurs: String
-    let animationRequise: String
+    var animationRequise: Bool
     let lien: String?
     let logo: String?
 
     enum CodingKeys: String, CodingKey {
-        case id = "_id" 
+        case id = "_id"
         case nomJeu = "nom_jeu"
-        case editeur
-        case type
-        case ageMin = "ageMin"
-        case duree
-        case theme
-        case mecanisme
-        case tags
-        case description
-        case recu
-        case nbJoueurs = "nbJoueurs"
-        case animationRequise = "animation_requise"
-        case lien
-        case logo
+        case editeur, type, ageMin, duree, theme, mecanisme, tags, description, recu, nbJoueurs, animationRequise, lien, logo
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        nomJeu = try container.decode(String.self, forKey: .nomJeu)
+        editeur = try container.decode(String.self, forKey: .editeur)
+        type = try container.decode(String.self, forKey: .type)
+        ageMin = try container.decodeIfPresent(String.self, forKey: .ageMin)
+        duree = try container.decodeIfPresent(String.self, forKey: .duree)
+        theme = try container.decodeIfPresent(String.self, forKey: .theme)
+        mecanisme = try container.decodeIfPresent(String.self, forKey: .mecanisme)
+        tags = try container.decodeIfPresent(String.self, forKey: .tags)
+        description = try container.decode(String.self, forKey: .description)
+        recu = try container.decode(Bool.self, forKey: .recu)
+        nbJoueurs = try container.decode(String.self, forKey: .nbJoueurs)
+        let animationRequiseString = try container.decode(String.self, forKey: .animationRequise)
+        animationRequise = animationRequiseString.lowercased() == "true" || animationRequiseString == "1"
+        lien = try container.decodeIfPresent(String.self, forKey: .lien)
+        logo = try container.decodeIfPresent(String.self, forKey: .logo)
     }
 }
+
+
 
 struct JeuID: Codable {
     let id: String

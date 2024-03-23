@@ -11,7 +11,7 @@ struct DetailStandView: View {
     @EnvironmentObject private var authModel: AuthViewModel
     @StateObject private var standModel = StandViewModel()
     @StateObject private var benevoleModel = BenevoleViewModel()
-    @State private var referentPseudos: [String: String] = [:] // ID → Pseudo
+    @State private var referentPseudos: [String: String] = [:]
     
     let stand: Stand
     let selectedHeure: String
@@ -24,35 +24,36 @@ struct DetailStandView: View {
                 Text("\(stand.nomStand) : \(selectedHeure)")
                     .font(.largeTitle)
                     .padding(.bottom, 20)
+                    .padding(.top, 20)
                 
                 Form {
-                                   Section {
-                                       Text("Description : \(stand.description)")
-                                       
-                                       if !stand.referents.isEmpty {
-                                           HStack {
-                                               Text("Référents :")
-                                               ForEach(stand.referents, id: \.id) { referent in
-                                                   Text(referentPseudos[referent.id, default: "Chargement du pseudo..."])
-                                               }
-                                           }
-                                       }
-                                       
-                                       if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
-                                           Text("Nombre de bénévoles requis au stand : \(horaireCota.nbBenevole ?? 0)")
-                                           
-                                           if let listeBenevole = horaireCota.listeBenevole, !listeBenevole.isEmpty {
-                                               Text("Liste des bénévoles déjà inscrits:")
-                                               ForEach(listeBenevole, id: \.id) { benevole in
-                                                   Text(self.referentPseudos[benevole.id, default: "Chargement du pseudo..."])
-                                               }
-                                           } else {
-                                               Text("Aucun bénévole inscrit pour cet horaire.")
-                                           }
-                                       }
-                                   }
-                               }
-                               .frame(height: 400)
+                                    Section(header: Text("Informations générales")) {
+                                        Text("Description : \(stand.description)")
+                                        if !stand.referents.isEmpty {
+                                            Text("Référents :")
+                                            ForEach(stand.referents, id: \.id) { referent in
+                                                Text(referentPseudos[referent.id, default: "Chargement du pseudo..."])
+                                            }
+                                        }
+                                        
+                                        if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
+                                            Text("Nombre de bénévoles requis : \(horaireCota.nbBenevole ?? 0)")
+                                        }
+                                    }
+                    Section(header: Text("Liste des bénévoles déjà inscrits")) {
+                                    if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }),
+                                       let listeBenevole = horaireCota.listeBenevole, !listeBenevole.isEmpty {
+                                        
+                                            ForEach(listeBenevole, id: \.id) { benevole in
+                                                Text(referentPseudos[benevole.id, default: "Chargement du pseudo..."])
+                                            }
+                                        
+                                    } else {
+                                            Text("Aucun bénévole inscrit pour cet horaire.")
+                                        }
+                                    }
+                                }
+                .frame(height: 500)
                     
                     Button(action: {
                         benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
@@ -81,7 +82,6 @@ struct DetailStandView: View {
                             .cornerRadius(8)
                             
                     }
-                    .padding(.top, 20)
                 }
         }
             .onAppear {
@@ -107,6 +107,7 @@ struct DetailStandView: View {
                     }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
             
         }
     

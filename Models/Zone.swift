@@ -10,7 +10,7 @@ import Foundation
 struct Zone: Codable, Identifiable {
     let id: String
     let nomZone: String
-    let referents: [BenevoleId]?
+    let referents: [BenevoleId]
     let idZone: String
     let date: Date
     let listeJeux: [JeuID]
