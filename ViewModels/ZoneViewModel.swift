@@ -85,18 +85,33 @@ class ZoneViewModel: ObservableObject {
         request.httpMethod = "PUT"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
-        URLSession.shared.dataTask(with: request) { _, response, error in
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(false, "Erreur lors de la participation : \(error.localizedDescription)")
                 return
             }
 
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            guard let httpResponse = response as? HTTPURLResponse else {
                 completion(false, "Réponse invalide du serveur.")
                 return
             }
 
-            completion(true, nil)  // Succès
+            if let data = data, httpResponse.statusCode != 200 {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    let message = json?["message"] as? String ?? "Erreur lors de la participation."
+                    
+                    // Adapter le message en fonction de celui du backend
+                    let finalMessage = message.contains("Le bénévole est déjà inscrit") ? "Vous êtes déjà inscrit quelque part à cette heure-ci." : message
+                    completion(false, finalMessage)
+                } catch {
+                    completion(false, "Erreur lors du décodage de la réponse du serveur.")
+                }
+            } else if httpResponse.statusCode == 200 {
+                completion(true, "Votre participation à la zone a été enregistrée avec succès.")
+            } else {
+                completion(false, "Erreur inconnue.")
+            }
         }.resume()
     }
     
