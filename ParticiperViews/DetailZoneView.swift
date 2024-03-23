@@ -12,6 +12,9 @@ struct DetailZoneView: View {
     @StateObject private var zoneModel = ZoneViewModel()
     @StateObject private var benevoleModel = BenevoleViewModel()
     @State private var referentPseudos: [String: String] = [:]
+    
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
 
     let zone: Zone
     let selectedHeure: String
@@ -75,15 +78,14 @@ struct DetailZoneView: View {
                             return
                         }
                         if let horaireCota = zone.horaireCota.first(where: { $0.heure == selectedHeure }) {
-                            let idHoraire = horaireCota.id
-                            zoneModel.participerALaZone(idBenevole: benevoleId, idHoraire: idHoraire) { success, errorMessage in
-                                if success {
-                                    print("Participation enregistrée avec succès.")
+                                    let idHoraire = horaireCota.id
+                                    zoneModel.participerALaZone(idBenevole: benevoleId, idHoraire: idHoraire) { success, errorMessage in
+                                        DispatchQueue.main.async {
+                                            alertMessage = errorMessage ?? (success ? "Votre participation a été enregistrée avec succès." : "Erreur lors de la participation.")
+                                            showingAlert = true
+                                        }
+                                    }
                                 } else {
-                                    print("Erreur lors de la tentative de participation : \(errorMessage ?? "Erreur inconnue")")
-                                }
-                            }
-                        } else {
                             print("Aucun horaire correspondant à \(selectedHeure) trouvé.")
                         }
                     }
@@ -93,6 +95,9 @@ struct DetailZoneView: View {
                         .frame(width: 300, height: 50)
                         .background(customColor)
                         .cornerRadius(8)
+                }
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
             }
         }
@@ -121,7 +126,5 @@ struct DetailZoneView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        
     }
-
 }
