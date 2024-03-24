@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NavigationBarView: View {
     @State private var selectedTab = "accueil"
+    
+    let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -43,10 +45,10 @@ struct NavigationBarView: View {
                 }
                 .tag("profil")
         }
-        .accentColor(.primary) // Modifier ici pour changer la couleur de l'icône sélectionnée
+        .accentColor(Color(customColor)) 
         .navigationViewStyle(StackNavigationViewStyle())
         .onAppear {
-            selectedTab = "accueil" // Définir l'onglet par défaut si nécessaire
+            selectedTab = "accueil"
         }
     }
 }
