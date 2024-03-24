@@ -21,7 +21,6 @@ struct LoginView: View {
                     NavigationBarView()
                         .environmentObject(viewModel) // Passez l'instance de AuthViewModel à HomeView
                 } else {
-                    // Interface de connexion
                     ScrollView {
                             VStack {
                                 if let image = UIImage(named: "nom_app") {
@@ -67,7 +66,6 @@ struct LoginView: View {
                             .cornerRadius(8)
                             .padding()
                             
-                            // Ajouter un NavigationLink ici
                             NavigationLink(destination: RegisterView()) {
                                 Text("Si tu n’as pas encore de compte, tu peux en créer un ici ")
                                     .foregroundColor(Color(customColor))
@@ -75,9 +73,17 @@ struct LoginView: View {
                                     .frame(width: 400)
                             }
                         }
+                    .onAppear {
+                        self.username = ""
+                        self.password = ""
+                    }
+                    .onDisappear {
+                        self.username = ""
+                        self.password = ""
                     }
                 }
             }
+        }
     }
 }
 
