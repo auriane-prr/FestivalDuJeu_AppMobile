@@ -21,18 +21,19 @@ struct ParticiperView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 300, height: 150)
-                        .offset(y : -30)
+                        .offset(y : -50)
+                        .padding(.bottom, -20)
                 }
                 
                 Text("Où veux-tu t'inscrire ?")
                     .font(.largeTitle)
-                    .padding(.bottom, 40)
+                    .padding(.bottom, 20)
                 
                 Button("Stands") {
                     self.isActiveStand = true
                 }
                 .foregroundColor(.white)
-                .frame(width: 300, height: 200)
+                .frame(width: 300, height: 180)
                 .background(Color(customColor))
                 .cornerRadius(8)
 
@@ -40,12 +41,9 @@ struct ParticiperView: View {
                     self.isActiveZone = true
                 }
                 .foregroundColor(.white)
-                .frame(width: 300, height: 200)
+                .frame(width: 300, height: 180)
                 .background(Color(customColor))
                 .cornerRadius(8)
-                
-                    
-                
                 
                 .sheet(isPresented: $isActiveStand) {
                     ParticiperStandView()

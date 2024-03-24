@@ -16,75 +16,79 @@ struct FlexibleStandView: View {
 
     @State private var selectedStandIds: Set<String> = []
     @State private var selectedHeure: String? = nil
+    
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
 
     let heures = ["9-11", "11-14", "14-17", "17-20", "20-22"]
+    
+    let customColor = Color(UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8))
 
     var body: some View {
-        NavigationView {
-            VStack {
+        
+        Text("Flexible Stand")
+                           .font(.largeTitle)
+                           .padding(.bottom, 20)
+                           .padding(.top, 20)
+        
+        Form {
+            Section(header : Text("Sélectionne une date : ")) {
                 if let _ = festivalModel.latestFestival {
                     Picker("Sélectionnez une date", selection: $festivalModel.selectedDate) {
                         ForEach(festivalModel.selectableDates, id: \.self) { date in
                             Text(formatDate(date: date)).tag(date)
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .padding()
+                    .pickerStyle(SegmentedPickerStyle())
                     .onReceive(festivalModel.$selectedDate) { newValue in
                         standModel.fetchStandsByDate(date: newValue)
                         currentDate = newValue
-                    }
-
-                    Picker("Sélectionnez une heure", selection: $selectedHeure) {
-                        Text("Aucune").tag(String?.none)
-                        ForEach(heures, id: \.self) { heure in
-                            Text(heure).tag(heure as String?)
-                        }
-                    }
-                    .pickerStyle(WheelPickerStyle())
-                    .frame(height: 150)
-                    .clipped()
-
-                    if let selectedHeure = selectedHeure {
-                        // Sélection des stands
-                        Text("Sélectionnez un ou plusieurs stands pour \(selectedHeure):")
-                        ScrollView {
-                            ForEach(standModel.standsDisponiblesPourHeure(date: currentDate, heure: selectedHeure), id: \.id) { stand in
-                                Button(action: {
-                                    if selectedStandIds.contains(stand.id) {
-                                        selectedStandIds.remove(stand.id)
-                                    } else {
-                                        selectedStandIds.insert(stand.id)
-                                    }
-                                }) {
-                                    HStack {
-                                        Image(systemName: selectedStandIds.contains(stand.id) ? "checkmark.square" : "square")
-                                        Text(stand.nomStand)
-                                    }
-                                }
-                                .foregroundColor(.primary)
-                            }
-                        }
-                    } else {
-                        Text("Veuillez sélectionner une heure.")
                     }
                 } else {
                     ProgressView().onAppear {
                         festivalModel.loadLatestFestival()
                     }
                 }
-
-                // Affichage des sélections
-                Text("Sélections :")
-                if !selectedStandIds.isEmpty {
-                    Text("Stands Sélectionnés :")
-                    ForEach(Array(selectedStandIds), id: \.self) { id in
-                        if let stand = standModel.stands.first(where: { $0.id == id }) {
-                            Text(stand.nomStand)
-                        }
+            }
+            
+            Section(header: Text("Sélectionne un horaire :")) {
+                Picker("", selection: $selectedHeure.onChange(clearSelectedStands)) {
+                    ForEach(heures, id: \.self) { heure in
+                        Text(heure).tag(heure as String?)
                     }
                 }
-                
+                    .frame(maxWidth: .infinity)
+            }
+
+            
+            Section(header: Text("Sélectionne un ou plusieurs stands : ")) {
+                if !standModel.standsDisponiblesPourHeure(date: currentDate, heure: selectedHeure ?? "9-11").isEmpty {
+                    ForEach(standModel.standsDisponiblesPourHeure(date: currentDate, heure: selectedHeure ?? "9-11"), id: \.id) { stand in
+                        Button(action: {
+                            if selectedStandIds.contains(stand.id) {
+                                selectedStandIds.remove(stand.id)
+                            } else {
+                                selectedStandIds.insert(stand.id)
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: selectedStandIds.contains(stand.id) ? "checkmark.square" : "square")
+                                    Text(stand.nomStand)
+                                    JaugeView(capaciteTotale: stand.horaireCota.first(where: { $0.heure == selectedHeure ?? "9-11" })?.nbBenevole ?? 0,
+                                              nombreInscrits: stand.horaireCota.first(where: { $0.heure == selectedHeure ?? "9-11" })?.listeBenevole?.count ?? 0)
+                                
+                            }
+                        }
+                        .foregroundColor(.primary)
+                    }
+                } else {
+                    Text("Pas de stand disponible à cet horaire.")
+                }
+            }
+
+        }
+        
                 Button(action: {
                     // Récupérez l'ID du bénévole
                     benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
@@ -111,34 +115,45 @@ struct FlexibleStandView: View {
                             return FlexibleStand(date: selectedDate, heure: selectedHeure, listeStand: [standId]) // Assurez-vous que la listeStand prend des ID sous forme de String
                         }
 
-                        // Appel de la fonction ajouterFlexibleAuStand
                         benevoleModel.ajouterFlexibleAuStand(benevoleId: benevoleId, horaires: horairesStands) { success, message in
-                            if success {
-                                print("Succès de l'ajout aux stands")
-                            } else {
-                                print("Erreur lors de l'ajout aux stands: \(message ?? "Erreur inconnue")")
-                            }
-                        }
+                                        if success {
+                                            self.alertTitle = "Succès"
+                                            self.alertMessage = "Votre flexibilité a bien été enregistrée."
+                                        } else {
+                                            self.alertTitle = "Erreur"
+                                            self.alertMessage = message ?? "Une erreur est survenue."
+                                        }
+                                        self.showingAlert = true
+                                    }
                     }
                 }) {
                     Text("Enregistrer")
-                        .font(.headline)
                         .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
+                        .frame(width: 300, height: 50)
+                        .background(customColor)
+                        .cornerRadius(8)
                 }
+                .alert(isPresented: $showingAlert) {
+                            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                        }
+                        .padding(.top, 20)
 
-            }
-            .navigationTitle("Flexible")
+            .navigationBarTitleDisplayMode(.inline)
         }
-    }
 
     private func formatDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
         return dateFormatter.string(from: date)
     }
+    
+    private func clearSelectedStands(_ newHour: String?) {
+            selectedStandIds.removeAll()
+        }
+    
 }
 
+
+#Preview{
+    FlexibleStandView()
+}

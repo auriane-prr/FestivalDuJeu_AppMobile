@@ -47,6 +47,7 @@
 		8C8F0F172BAB694300C99146 /* BenevoleId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F0F162BAB694300C99146 /* BenevoleId.swift */; };
 		8C8F0F192BAB6A6400C99146 /* Planning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F0F182BAB6A6400C99146 /* Planning.swift */; };
 		8CDB0D9F2BAEE4A4002A43F0 /* DetailJeuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDB0D9E2BAEE4A4002A43F0 /* DetailJeuView.swift */; };
+		8CDB0DA22BB040C5002A43F0 /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDB0DA12BB040C5002A43F0 /* BindingExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		8C8F0F162BAB694300C99146 /* BenevoleId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenevoleId.swift; sourceTree = "<group>"; };
 		8C8F0F182BAB6A6400C99146 /* Planning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planning.swift; sourceTree = "<group>"; };
 		8CDB0D9E2BAEE4A4002A43F0 /* DetailJeuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailJeuView.swift; sourceTree = "<group>"; };
+		8CDB0DA12BB040C5002A43F0 /* BindingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 		8C8A8CDB2BA18A5E00414ADD = {
 			isa = PBXGroup;
 			children = (
+				8CDB0DA02BB040A0002A43F0 /* Extensions */,
 				8C7CC4002BA9EE2F00BD12D2 /* FlexibleViews */,
 				8C3C91FA2BA49CB9001890E6 /* ParticiperViews */,
 				8C3C91F12BA46522001890E6 /* ViewModels */,
@@ -258,6 +261,14 @@
 				8C8A8D052BA18A6000414ADD /* FestivalDuJeuUITestsLaunchTests.swift */,
 			);
 			path = FestivalDuJeuUITests;
+			sourceTree = "<group>";
+		};
+		8CDB0DA02BB040A0002A43F0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8CDB0DA12BB040C5002A43F0 /* BindingExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C8A8D172BA192CF00414ADD /* AuthViewModel.swift in Sources */,
+				8CDB0DA22BB040C5002A43F0 /* BindingExtensions.swift in Sources */,
 				8C3C91EF2BA46441001890E6 /* Festival.swift in Sources */,
 				8C1FFF622BADBE59008449A8 /* JeuxViewModel.swift in Sources */,
 				8C7CC4062BAB103600BD12D2 /* Creneau.swift in Sources */,

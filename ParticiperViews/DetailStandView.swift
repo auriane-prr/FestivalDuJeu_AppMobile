@@ -56,7 +56,6 @@ struct DetailStandView: View {
                         }
                     }
                 }
-                .frame(height: 500)
                 
                 Button(action: {
                                     benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
@@ -81,6 +80,8 @@ struct DetailStandView: View {
                                         .background(customColor)
                                         .cornerRadius(8)
                                 }
+                                .padding(.top, 20)
+                
                                 .alert(isPresented: $showingAlert) {
                                     Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                                 }

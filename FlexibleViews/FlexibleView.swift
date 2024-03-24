@@ -10,36 +10,40 @@ import SwiftUI
 struct FlexibleView: View {
     @State private var isActiveStand = false
     @State private var isActiveZone = false
+    
+    let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
 
     var body: some View {
         NavigationView {
             VStack {
-                Button(action: {
+                if let image = UIImage(named: "logo") {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 300, height: 150)
+                        .offset(y : -50)
+                        .padding(.bottom, -20)
+                }
+                Text("Où veux-tu être flexible ?")
+                    .font(.largeTitle)
+                    .padding(.bottom, 20)
+                
+                Button("Stands") {
                     self.isActiveStand = true
-                }) {
-                    Text("Stand")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
                 }
-                .buttonStyle(PlainButtonStyle())
+                .foregroundColor(.white)
+                .frame(width: 300, height: 180)
+                .background(Color(customColor))
+                .cornerRadius(8)
 
-                Button(action: {
+                Button("Zones") {
                     self.isActiveZone = true
-                }) {
-                    Text("Zones")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
                 }
-                .buttonStyle(PlainButtonStyle())
-                .navigationTitle("Où veux-tu t'inscrire ?")
+                .foregroundColor(.white)
+                .frame(width: 300, height: 180)
+                .background(Color(customColor))
+                .cornerRadius(8)
+               
                 .sheet(isPresented: $isActiveStand) {
                     FlexibleStandView()
                 }
@@ -51,6 +55,6 @@ struct FlexibleView: View {
     }
 }
 
-
-
-
+#Preview{
+    FlexibleView()
+}

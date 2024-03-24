@@ -68,7 +68,6 @@ struct DetailZoneView: View {
                                         }
                                     }
                                 }
-                .frame(height: 500)
                 
                 
                 Button(action: {
@@ -96,6 +95,8 @@ struct DetailZoneView: View {
                         .background(customColor)
                         .cornerRadius(8)
                 }
+                .padding(.top, 20)
+                
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
                 }
