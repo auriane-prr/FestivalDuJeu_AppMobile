@@ -14,13 +14,11 @@ struct DetailJeuView: View {
     var body: some View {
         List {
             HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
-                    // Affichage du titre en plus gros
                     Text(jeu.nomJeu)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .padding()
 
-                    // Affichage du logo en plus gros
                     if let logoURL = jeu.logo, let url = URL(string: logoURL), let imageData = try? Data(contentsOf: url), let uiImage = UIImage(data: imageData) {
                         Image(uiImage: uiImage)
                             .resizable()
@@ -40,7 +38,6 @@ struct DetailJeuView: View {
             }
 
             Section(header: Text("Informations générales")) {
-                // Vos champs d'informations ici, par exemple :
                 HStack {
                     Text("Éditeur:")
                     Spacer()

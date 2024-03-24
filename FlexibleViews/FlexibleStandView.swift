@@ -144,6 +144,7 @@ struct FlexibleStandView: View {
     private func formatDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
+        dateFormatter.locale = Locale(identifier: "fr_FR")
         return dateFormatter.string(from: date)
     }
     

@@ -29,7 +29,7 @@ struct ProfilView: View {
     let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
     
     var body: some View {
-        NavigationView { // Assurez-vous que NavigationView enveloppe tout le contenu
+        NavigationView {
             VStack {
                 if let benevole = benevoleModel.benevole {
                     Text("Bienvenue \(benevole.pseudo) !")

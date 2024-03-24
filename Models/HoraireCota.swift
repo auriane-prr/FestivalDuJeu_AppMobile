@@ -14,7 +14,7 @@ struct HoraireCota: Codable {
     let listeBenevole: [BenevoleId]?
     
     enum CodingKeys: String, CodingKey {
-        case id = "_id" // Ajouté
+        case id = "_id" 
         case heure
         case nbBenevole = "nb_benevole"
         case listeBenevole = "liste_benevole"
