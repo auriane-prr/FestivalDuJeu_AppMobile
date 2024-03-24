@@ -13,16 +13,19 @@ struct RegisterView: View {
     @State private var isLoading = false
     @State private var isGeneratingPseudo = false
     
-    @State private var oldNom = ""
-    @State private var oldPrenom = ""
-    
     let customColor = UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8)
+    
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
+
 
     var body: some View {
         NavigationView {
             Form {
-                Section(header : Text("Informations obligatoires :")) {
+                
                     Text("Merci de vous joindre à nous pour cette nouvelle édition du Festival du Jeu à Montpellier !")
+                    .font(.headline)
+                Section(header : Text("Informations obligatoires :")) {
                     TextField("Votre nom", text: $viewModel.benevole.nom)
                     
                     TextField("Votre prénom", text: $viewModel.benevole.prenom)
@@ -63,18 +66,25 @@ struct RegisterView: View {
                         if viewModel.isFormValid() {
                             isLoading = true
                             Task {
-                                await viewModel.register()
-                                isLoading = false
+                                await viewModel.register { success, message in
+                                    isLoading = false
+                                    alertMessage = message
+                                    showingAlert = true
+                                }
                             }
                         } else {
-                            viewModel.errorMessage = "Veuillez remplir tous les champs requis."
+                            alertMessage = "Veuillez remplir tous les champs requis."
+                            showingAlert = true
                         }
                     }
-                        .foregroundColor(.white)
-                        .frame(width: 200, height: 50)
-                        .background(Color(customColor))
-                        .cornerRadius(8)
-                        .disabled(isLoading)
+                    .foregroundColor(.white)
+                    .frame(width: 200, height: 50)
+                    .background(Color(customColor))
+                    .cornerRadius(8)
+                    .disabled(isLoading)
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    }
                     Spacer()
                 }
 
@@ -103,10 +113,4 @@ struct RegisterView: View {
             }
         }
     }
-    private func generatePseudo() {
-            viewModel.generatePseudoIfNeeded()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                isGeneratingPseudo = false
-            }
-        }
 }

@@ -12,9 +12,8 @@ class RegisterViewModel: ObservableObject {
     
     @Published var errorMessage: String = ""
     @Published var successMessage: String? = ""
-    @Published var isGeneratingPseudo = false
-
-    func register() async {
+    
+    func register(completion: @escaping (Bool, String) -> Void) async {
         
         guard let url = URL(string: "https://festivaldujeuback.onrender.com/benevole/signup") else {
             DispatchQueue.main.async {
@@ -36,28 +35,34 @@ class RegisterViewModel: ObservableObject {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
-            let (_, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 else {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Échec de l'inscription. Veuillez réessayer."
-                    print("echec")
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.successMessage = "Inscription réussie. Veuillez vous connecter."
-                print("inscription réussie")
-                // Vous pouvez choisir de réinitialiser les champs ici
-                self.benevole = Benevole(_id: "", admin: false, referent: false, nom: "", prenom: "", password: "", pseudo: "", association: "", taille_tshirt: "", vegetarien: false, mail: "", hebergement: "", num_telephone: "", adresse: "")
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.errorMessage = "Erreur lors de l'inscription: \(error.localizedDescription)"
-                print("erreur")
-            }
-        }
-    }
+               let (_, response) = try await URLSession.shared.data(for: request)
+               guard let httpResponse = response as? HTTPURLResponse else {
+                   DispatchQueue.main.async {
+                       completion(false, "Réponse invalide du serveur.")
+                   }
+                   return
+               }
+
+               if httpResponse.statusCode == 201 {
+                   DispatchQueue.main.async {
+                       completion(true, "Inscription réussie. Veuillez vous connecter.")
+                   }
+               } else if httpResponse.statusCode == 409 {
+                   // Gérer le cas où le pseudo existe déjà
+                   DispatchQueue.main.async {
+                       completion(false, "Cet utilisateur existe déjà.")
+                   }
+               } else {
+                   DispatchQueue.main.async {
+                       completion(false, "Échec de l'inscription. Veuillez réessayer.")
+                   }
+               }
+           } catch {
+               DispatchQueue.main.async {
+                   completion(false, "Erreur lors de l'inscription: \(error.localizedDescription)")
+               }
+           }
+       }
     
     func isFormValid() -> Bool {
         return !benevole.nom.isEmpty && !benevole.prenom.isEmpty &&
@@ -65,57 +70,4 @@ class RegisterViewModel: ObservableObject {
             !benevole.mail.isEmpty && !benevole.association.isEmpty &&
             !benevole.hebergement.isEmpty
     }
-    
-    func checkPseudoUnique(pseudo: String, completion: @escaping (Bool) -> Void) {
-        guard let url = URL(string: "https://festivaldujeuback.onrender.com/benevole/check-pseudo/\(pseudo)") else {
-            print("URL invalide")
-            completion(true) // Présumez non unique pour éviter des problèmes
-            return
-        }
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                print("Erreur lors de la vérification du pseudo:", error?.localizedDescription ?? "Inconnue")
-                completion(true) // Présumez non unique pour éviter des problèmes
-                return
-            }
-
-            if let response = try? JSONDecoder().decode([String: Bool].self, from: data), let exists = response["exists"] {
-                completion(exists)
-            } else {
-                print("Réponse invalide du serveur lors de la vérification du pseudo")
-                completion(true) // Présumez non unique pour éviter des problèmes
-            }
-        }.resume()
-    }
-    
-    func generatePseudoIfNeeded() {
-        guard !benevole.nom.isEmpty, !benevole.prenom.isEmpty else {
-            return
-        }
-
-        isGeneratingPseudo = true
-        let basePseudo = "\(benevole.prenom)\(String(benevole.nom.prefix(1)))"
-        var counter = 1
-
-        // Fonction récursive pour vérifier l'unicité du pseudo
-        func checkAndAssignUniquePseudo(_ pseudo: String) {
-            checkPseudoUnique(pseudo: pseudo) { exists in
-                DispatchQueue.main.async {
-                    if exists {
-                        let newPseudo = "\(basePseudo)\(counter)"
-                        counter += 1
-                        print("Pseudo \(newPseudo) already exists, incrementing counter.")
-                        checkAndAssignUniquePseudo(newPseudo)
-                    } else {
-                        self.benevole.pseudo = pseudo
-                        self.isGeneratingPseudo = false
-                    }
-                }
-            }
-        }
-
-        checkAndAssignUniquePseudo(basePseudo)
-    }
-
 }
