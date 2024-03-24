@@ -81,18 +81,16 @@ class AuthViewModel: ObservableObject {
     }
     
     func logout() {
-        // Déconnexion de l'utilisateur
-        // Réinitialisation des données utilisateur
-        self.benevole = nil
-        self.isAuthenticated = false
-        self.username = ""
-        self.password = ""
-        
-        // Suppression du token d'authentification
-        UserDefaults.standard.removeObject(forKey: "authToken")
-        print("déconnexion")
-        print("Pseudo du bénévole connecté: \(username)")
-        isAuthenticated = false
+        DispatchQueue.main.async {
+            self.benevole = nil
+            self.isAuthenticated = false
+
+            UserDefaults.standard.removeObject(forKey: "authToken")
+
+            self.username = ""
+            self.password = ""
+            self.isAuthenticated = false
+        }
     }
     
     struct LoginResponse: Decodable {
