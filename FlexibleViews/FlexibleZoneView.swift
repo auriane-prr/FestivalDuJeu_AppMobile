@@ -16,75 +16,78 @@ struct FlexibleZoneView: View {
 
     @State private var selectedZoneIds: Set<String> = []
     @State private var selectedHeure: String? = nil
+    
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
 
     let heures = ["9-11", "11-14", "14-17", "17-20", "20-22"]
+    
+    let customColor = Color(UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8))
 
     var body: some View {
-        NavigationView {
-            VStack {
+        Text("Flexible Zone")
+                           .font(.largeTitle)
+                           .padding(.bottom, 20)
+                           .padding(.top, 20)
+        
+        Form {
+            Section(header : Text("Sélectionne une date : ")) {
                 if let _ = festivalModel.latestFestival {
                     Picker("Sélectionnez une date", selection: $festivalModel.selectedDate) {
                         ForEach(festivalModel.selectableDates, id: \.self) { date in
                             Text(formatDate(date: date)).tag(date)
                         }
                     }
-                    .pickerStyle(.segmented)
-                    .padding()
+                    .pickerStyle(SegmentedPickerStyle())
                     .onReceive(festivalModel.$selectedDate) { newValue in
                         zoneModel.fetchZonesByDate(date: newValue)
                         currentDate = newValue
-                    }
-
-                    Picker("Sélectionnez une heure", selection: $selectedHeure) {
-                        Text("Aucune").tag(String?.none)
-                        ForEach(heures, id: \.self) { heure in
-                            Text(heure).tag(heure as String?)
-                        }
-                    }
-                    .pickerStyle(WheelPickerStyle())
-                    .frame(height: 150)
-                    .clipped()
-
-                    if let selectedHeure = selectedHeure {
-                        // Sélection des zones
-                        Text("Sélectionnez une ou plusieurs zones pour \(selectedHeure):")
-                        ScrollView {
-                            ForEach(zoneModel.zonesDisponiblesPourHeure(date: currentDate, heure: selectedHeure), id: \.id) { zone in
-                                Button(action: {
-                                    if selectedZoneIds.contains(zone.id) {
-                                        selectedZoneIds.remove(zone.id)
-                                    } else {
-                                        selectedZoneIds.insert(zone.id)
-                                    }
-                                }) {
-                                    HStack {
-                                        Image(systemName: selectedZoneIds.contains(zone.id) ? "checkmark.square" : "square")
-                                        Text(zone.nomZone)
-                                    }
-                                }
-                                .foregroundColor(.primary)
-                            }
-                        }
-                    } else {
-                        Text("Veuillez sélectionner une heure.")
                     }
                 } else {
                     ProgressView().onAppear {
                         festivalModel.loadLatestFestival()
                     }
                 }
-
-                // Affichage des sélections
-                Text("Sélections :")
-
-                if !selectedZoneIds.isEmpty {
-                    Text("Zones Sélectionnées :")
-                    ForEach(Array(selectedZoneIds), id: \.self) { id in
-                        if let zone = zoneModel.zones.first(where: { $0.id == id }) {
-                            Text(zone.nomZone)
-                        }
+            }
+            
+            Section(header: Text("Sélectionne un horaire :")) {
+                Picker("", selection: $selectedHeure.onChange(clearSelectedZones)) {
+                    ForEach(heures, id: \.self) { heure in
+                        Text(heure).tag(heure as String?)
                     }
                 }
+                    .frame(maxWidth: .infinity)
+            }
+
+            
+            Section(header: Text("Sélectionne une ou plusieures zones : ")) {
+                if !zoneModel.zonesDisponiblesPourHeure(date: currentDate, heure: selectedHeure ?? "9-11").isEmpty {
+                    ForEach(zoneModel.zonesDisponiblesPourHeure(date: currentDate, heure: selectedHeure ?? "9-11"), id: \.id) { zone in
+                        Button(action: {
+                            if selectedZoneIds.contains(zone.id) {
+                                selectedZoneIds.remove(zone.id)
+                            } else {
+                                selectedZoneIds.insert(zone.id)
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: selectedZoneIds.contains(zone.id) ? "checkmark.square" : "square")
+                                    Text(zone.nomZone)
+                                    JaugeView(capaciteTotale: zone.horaireCota.first(where: { $0.heure == selectedHeure ?? "9-11" })?.nbBenevole ?? 0,
+                                              nombreInscrits: zone.horaireCota.first(where: { $0.heure == selectedHeure ?? "9-11" })?.listeBenevole?.count ?? 0)
+                                
+                            }
+                        }
+                        .foregroundColor(.primary)
+                    }
+                } else {
+                    Text("Pas de zone disponible à cet horaire.")
+                }
+            }
+
+        }
+        
                 Button(action: {
                     // Récupérez l'ID du bénévole
                     benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
@@ -122,22 +125,33 @@ struct FlexibleZoneView: View {
                     }
                 }) {
                     Text("Enregistrer")
-                        .font(.headline)
                         .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
+                        .frame(width: 300, height: 50)
+                        .background(customColor)
+                        .cornerRadius(8)
                 }
-
-            }
-            .navigationTitle("Flexible")
+                .alert(isPresented: $showingAlert) {
+                            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                        }
+                        .padding(.top, 20)
+        
+        .navigationBarTitleDisplayMode(.inline)
+        
         }
-    }
+    
 
     private func formatDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMMM yyyy"
         return dateFormatter.string(from: date)
     }
+
+    private func clearSelectedZones(_ newHour: String?) {
+        selectedZoneIds.removeAll()
+    }
 }
+
+#Preview{
+    FlexibleZoneView()
+}
+
