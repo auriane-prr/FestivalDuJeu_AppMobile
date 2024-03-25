@@ -48,6 +48,7 @@
 		8C8F0F192BAB6A6400C99146 /* Planning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8F0F182BAB6A6400C99146 /* Planning.swift */; };
 		8CDB0D9F2BAEE4A4002A43F0 /* DetailJeuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDB0D9E2BAEE4A4002A43F0 /* DetailJeuView.swift */; };
 		8CDB0DA22BB040C5002A43F0 /* BindingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CDB0DA12BB040C5002A43F0 /* BindingExtensions.swift */; };
+		8CFF48D92BB18BB400531ECD /* Items.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFF48D82BB18BB400531ECD /* Items.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		8C8F0F182BAB6A6400C99146 /* Planning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planning.swift; sourceTree = "<group>"; };
 		8CDB0D9E2BAEE4A4002A43F0 /* DetailJeuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailJeuView.swift; sourceTree = "<group>"; };
 		8CDB0DA12BB040C5002A43F0 /* BindingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtensions.swift; sourceTree = "<group>"; };
+		8CFF48D82BB18BB400531ECD /* Items.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Items.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 				8C7CC4052BAB103600BD12D2 /* Creneau.swift */,
 				8C8F0F162BAB694300C99146 /* BenevoleId.swift */,
 				8C8F0F182BAB6A6400C99146 /* Planning.swift */,
+				8CFF48D82BB18BB400531ECD /* Items.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				8C8A8CE82BA18A5E00414ADD /* FestivalDuJeuApp.swift in Sources */,
 				8C3C91E92BA4584E001890E6 /* PlanningView.swift in Sources */,
 				8C61580D2BA5E1F900C9B025 /* ParticiperZoneView.swift in Sources */,
+				8CFF48D92BB18BB400531ECD /* Items.swift in Sources */,
 				8C7CC3FF2BA9E12700BD12D2 /* Flexibles.swift in Sources */,
 				8C8A8D192BA1962A00414ADD /* Benevole.swift in Sources */,
 				8C3C91F32BA4653F001890E6 /* FestivalViewModel.swift in Sources */,

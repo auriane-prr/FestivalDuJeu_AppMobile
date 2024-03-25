@@ -53,11 +53,12 @@ struct FlexibleStandView: View {
             }
             
             Section(header: Text("Sélectionne un horaire :")) {
-                Picker("", selection: $selectedHeure.onChange(clearSelectedStands)) {
-                    ForEach(heures, id: \.self) { heure in
-                        Text(heure).tag(heure as String?)
-                    }
-                }
+                Picker(selection: $selectedHeure, label: Text("")) {
+                            Text("Aucune").tag(String?.none)
+                            ForEach(heures, id: \.self) { heure in
+                                Text(heure).tag(heure as String?)
+                            }
+                        }
                     .frame(maxWidth: .infinity)
             }
 
@@ -112,31 +113,33 @@ struct FlexibleStandView: View {
 
                         // Créez les structures pour les horaires des stands
                         let horairesStands = selectedStandIds.map { standId -> FlexibleStand in
-                            return FlexibleStand(date: selectedDate, heure: selectedHeure, listeStand: [standId]) // Assurez-vous que la listeStand prend des ID sous forme de String
+                            return FlexibleStand(date: selectedDate, heure: selectedHeure, listeStand: [standId])
                         }
 
                         benevoleModel.ajouterFlexibleAuStand(benevoleId: benevoleId, horaires: horairesStands) { success, message in
-                                        if success {
-                                            self.alertTitle = "Succès"
-                                            self.alertMessage = "Votre flexibilité a bien été enregistrée."
-                                        } else {
-                                            self.alertTitle = "Erreur"
-                                            self.alertMessage = message ?? "Une erreur est survenue."
-                                        }
-                                        self.showingAlert = true
-                                    }
+                                if success {
+                                    self.alertTitle = "Succès"
+                                    self.alertMessage = "Votre flexibilité a bien été enregistrée."
+                                } else {
+                                    self.alertTitle = "Erreur"
+                                    self.alertMessage = message ?? "Une erreur est survenue."
+                                }
+                                DispatchQueue.main.async {
+                                    self.showingAlert = true
+                                }
+                            }
                     }
                 }) {
                     Text("Enregistrer")
-                        .foregroundColor(.white)
-                        .frame(width: 300, height: 50)
-                        .background(customColor)
-                        .cornerRadius(8)
-                }
-                .alert(isPresented: $showingAlert) {
-                            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                        }
-                        .padding(.top, 20)
+                            .foregroundColor(.white)
+                            .frame(width: 300, height: 50)
+                            .background(customColor)
+                            .cornerRadius(8)
+                    }
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    }
+                    .padding(.top, 20)
 
             .navigationBarTitleDisplayMode(.inline)
         }

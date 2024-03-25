@@ -52,11 +52,12 @@ struct FlexibleZoneView: View {
             }
             
             Section(header: Text("Sélectionne un horaire :")) {
-                Picker("", selection: $selectedHeure.onChange(clearSelectedZones)) {
-                    ForEach(heures, id: \.self) { heure in
-                        Text(heure).tag(heure as String?)
-                    }
-                }
+                Picker(selection: $selectedHeure, label: Text("")) {
+                            Text("Aucune").tag(String?.none)
+                            ForEach(heures, id: \.self) { heure in
+                                Text(heure).tag(heure as String?)
+                            }
+                        }
                     .frame(maxWidth: .infinity)
             }
 
@@ -109,31 +110,34 @@ struct FlexibleZoneView: View {
                             return
                         }
 
-                        // Créez les structures pour les horaires des zones
                         let horairesZones = selectedZoneIds.map { zoneId -> FlexibleZone in
                             return FlexibleZone(date: selectedDate, heure: selectedHeure, listeZone: [zoneId]) // Assurez-vous que la listeZone prend des ID sous forme de String
                         }
 
-                        // Appel de la fonction ajouterFlexibleALaZone
                         benevoleModel.ajouterFlexibleALaZone(benevoleId: benevoleId, horaires: horairesZones) { success, message in
-                            if success {
-                                print("Succès de l'ajout aux zones")
-                            } else {
-                                print("Erreur lors de l'ajout aux zones: \(message ?? "Erreur inconnue")")
+                                if success {
+                                    self.alertTitle = "Succès"
+                                    self.alertMessage = "Votre flexibilité a bien été enregistrée."
+                                } else {
+                                    self.alertTitle = "Erreur"
+                                    self.alertMessage = message ?? "Une erreur est survenue."
+                                }
+                                DispatchQueue.main.async {
+                                    self.showingAlert = true
+                                }
                             }
-                        }
                     }
                 }) {
                     Text("Enregistrer")
-                        .foregroundColor(.white)
-                        .frame(width: 300, height: 50)
-                        .background(customColor)
-                        .cornerRadius(8)
-                }
-                .alert(isPresented: $showingAlert) {
-                            Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                        }
-                        .padding(.top, 20)
+                            .foregroundColor(.white)
+                            .frame(width: 300, height: 50)
+                            .background(customColor)
+                            .cornerRadius(8)
+                    }
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    }
+                .padding(.top, 20)
         
         .navigationBarTitleDisplayMode(.inline)
         

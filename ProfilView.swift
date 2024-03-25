@@ -35,19 +35,6 @@ struct ProfilView: View {
                     Text("Bienvenue \(benevole.pseudo) !")
                         .font(.title)
                     
-                    if let successMessage = benevoleModel.successMessage {
-                                Text(successMessage)
-                                    .foregroundColor(.green)
-                                    .padding()
-                                    .transition(.opacity)
-                                    .onAppear {
-                                        // Efface successMessage après 5 secondes
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                            benevoleModel.successMessage = nil
-                                        }
-                                    }
-                            }
-                    
                     Form {
                         HStack {
                             Text("Nom :")
