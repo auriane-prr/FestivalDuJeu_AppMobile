@@ -16,6 +16,7 @@ class StandViewModel: ObservableObject {
     @Published var selectedStandsPerHour: [String: [String]] = [:]
     
     func fetchStandsByDate(date: Date) {
+        isLoading = true
         let dateString = DateFormatter.iso8601Full.string(from: date)
         print(dateString)
         guard let url = URL(string: "https://festivaldujeuback.onrender.com/stands/date/\(dateString)") else {
@@ -25,7 +26,6 @@ class StandViewModel: ObservableObject {
             return
         }
 
-        isLoading = true
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             DispatchQueue.main.async {
                 self?.isLoading = false

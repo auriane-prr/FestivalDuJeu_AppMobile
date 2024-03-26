@@ -72,7 +72,7 @@ class BenevoleViewModel: ObservableObject {
 
     
     func fetchBenevole(pseudo: String) {
-        
+        isLoading = true
         guard let url = URL(string: "https://festivaldujeuback.onrender.com/benevole/pseudo/\(pseudo)") else {
             self.errorMessage = "URL invalide."
             return

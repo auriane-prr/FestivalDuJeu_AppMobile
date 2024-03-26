@@ -22,25 +22,27 @@ struct DetailStandView: View {
     let customColor = Color(UIColor(red: 29/255, green: 36/255, blue: 75/255, alpha: 0.8))
     
     var body: some View {
-        ScrollView {
+//        ScrollView {
             VStack {
                 Text("\(stand.nomStand) : \(selectedHeure)")
                     .font(.largeTitle)
                     .padding(.bottom, 20)
                     .padding(.top, 20)
-                
                 Form {
                     Section(header: Text("Informations générales")) {
                         Text("Description : \(stand.description)")
+                        if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
+                            Text("Nombre de bénévoles requis : \(horaireCota.nbBenevole ?? 0)")
+                        }
+                    }
+                    
+                    Section(header: Text("Référent(s) : ")) {
                         if !stand.referents.isEmpty {
-                            Text("Référents :")
                             ForEach(stand.referents, id: \.id) { referent in
                                 Text(referentPseudos[referent.id, default: "Chargement du pseudo..."])
                             }
-                        }
-                        
-                        if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
-                            Text("Nombre de bénévoles requis : \(horaireCota.nbBenevole ?? 0)")
+                        } else {
+                            Text("Il n'y a aucun référent à ce stand pour l'instant")
                         }
                     }
                     Section(header: Text("Liste des bénévoles déjà inscrits")) {
@@ -58,35 +60,36 @@ struct DetailStandView: View {
                 }
                 
                 Button(action: {
-                                    benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
-                                        guard let benevoleId = benevoleId else {
-                                            print("Impossible de récupérer l'ID du bénévole.")
-                                            return
-                                        }
-                                        if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
-                                            let idHoraire = horaireCota.id
-                                            standModel.participerAuStand(idBenevole: benevoleId, idHoraire: idHoraire) { success, message in
-                                                alertMessage = message ?? (success ? "Votre participation a été enregistrée avec succès." : "Erreur lors de la participation.")
-                                                showingAlert = true
-                                            }
-                                        } else {
-                                            print("Aucun horaire correspondant à \(selectedHeure) trouvé.")
-                                        }
-                                    }
-                                }) {
-                                    Text("Participer")
-                                        .foregroundColor(.white)
-                                        .frame(width: 300, height: 50)
-                                        .background(customColor)
-                                        .cornerRadius(8)
-                                }
-                                .padding(.top, 20)
-                
-                                .alert(isPresented: $showingAlert) {
-                                    Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                                }
-                            }
+                    benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
+                        guard let benevoleId = benevoleId else {
+                            print("Impossible de récupérer l'ID du bénévole.")
+                            return
                         }
+                        if let horaireCota = stand.horaireCota.first(where: { $0.heure == selectedHeure }) {
+                            let idHoraire = horaireCota.id
+                            standModel.participerAuStand(idBenevole: benevoleId, idHoraire: idHoraire) { success, message in
+                                alertMessage = message ?? (success ? "Votre participation a été enregistrée avec succès." : "Erreur lors de la participation.")
+                                showingAlert = true
+                            }
+                        } else {
+                            print("Aucun horaire correspondant à \(selectedHeure) trouvé.")
+                        }
+                    }
+                }) {
+                    Text("Participer")
+                        .foregroundColor(.white)
+                        .frame(width: 300, height: 50)
+                        .background(customColor)
+                        .cornerRadius(8)
+                }
+                .padding(.top, 20)
+                
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text("Notification"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
+            }
+//        }
+        
         .onAppear {
             for referent in stand.referents {
                 benevoleModel.fetchPseudoById(id: referent.id) { pseudo in

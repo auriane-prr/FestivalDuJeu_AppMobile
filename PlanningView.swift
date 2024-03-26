@@ -16,6 +16,11 @@ struct PlanningView: View {
 
     var body: some View {
         VStack {
+            Text("Ton planning")
+                .font(.largeTitle)
+                .padding(.bottom, 20)
+                .padding(.top, 20)
+            
             if planningModel.isLoading {
                 ProgressView()
             } else if let errorMessage = planningModel.errorMessage {
