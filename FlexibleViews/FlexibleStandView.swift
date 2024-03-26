@@ -12,6 +12,8 @@ struct FlexibleStandView: View {
     @StateObject private var festivalModel = FestivalViewModel()
     @StateObject private var standModel = StandViewModel()
     @StateObject private var benevoleModel = BenevoleViewModel()
+    @StateObject private var flexibleModel = FlexibleViewModel()
+    
     @State private var currentDate = Date()
 
     @State private var selectedStandIds: Set<String> = []
@@ -91,14 +93,12 @@ struct FlexibleStandView: View {
         }
         
                 Button(action: {
-                    // Récupérez l'ID du bénévole
                     benevoleModel.getBenevoleId(pseudo: authModel.username) { benevoleId in
                         guard let benevoleId = benevoleId else {
                             print("Impossible de récupérer l'ID du bénévole.")
                             return
                         }
 
-                        // Assurez-vous d'avoir l'heure et la date sélectionnées
                         guard let selectedHeure = selectedHeure else {
                             print("Informations requises pour ajouter un bénévole flexible manquantes")
                             return
@@ -111,12 +111,11 @@ struct FlexibleStandView: View {
                             return
                         }
 
-                        // Créez les structures pour les horaires des stands
                         let horairesStands = selectedStandIds.map { standId -> FlexibleStand in
                             return FlexibleStand(date: selectedDate, heure: selectedHeure, listeStand: [standId])
                         }
 
-                        benevoleModel.ajouterFlexibleAuStand(benevoleId: benevoleId, horaires: horairesStands) { success, message in
+                        flexibleModel.ajouterFlexibleAuStand(benevoleId: benevoleId, horaires: horairesStands) { success, message in
                                 if success {
                                     self.alertTitle = "Succès"
                                     self.alertMessage = "Votre flexibilité a bien été enregistrée."

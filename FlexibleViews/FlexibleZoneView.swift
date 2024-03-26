@@ -12,6 +12,7 @@ struct FlexibleZoneView: View {
     @StateObject private var festivalModel = FestivalViewModel()
     @StateObject private var zoneModel = ZoneViewModel()
     @StateObject private var benevoleModel = BenevoleViewModel()
+    @StateObject private var flexibleModel = FlexibleViewModel()
     @State private var currentDate = Date()
 
     @State private var selectedZoneIds: Set<String> = []
@@ -114,7 +115,7 @@ struct FlexibleZoneView: View {
                             return FlexibleZone(date: selectedDate, heure: selectedHeure, listeZone: [zoneId]) // Assurez-vous que la listeZone prend des ID sous forme de String
                         }
 
-                        benevoleModel.ajouterFlexibleALaZone(benevoleId: benevoleId, horaires: horairesZones) { success, message in
+                        flexibleModel.ajouterFlexibleALaZone(benevoleId: benevoleId, horaires: horairesZones) { success, message in
                                 if success {
                                     self.alertTitle = "Succès"
                                     self.alertMessage = "Votre flexibilité a bien été enregistrée."
