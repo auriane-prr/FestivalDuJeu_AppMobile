@@ -18,4 +18,3 @@ struct FlexibleZone {
     let heure: String
     let listeZone: [String]
 }
-

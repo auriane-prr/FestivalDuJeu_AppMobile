@@ -12,6 +12,8 @@ struct PlanningView: View {
     @ObservedObject var planningModel = PlanningViewModel()
     @ObservedObject var benevoleModel = BenevoleViewModel()
     
+    let heures = ["9-11", "11-14", "14-17", "17-20", "20-22"]
+
     var body: some View {
         VStack {
             if planningModel.isLoading {
@@ -20,35 +22,27 @@ struct PlanningView: View {
                 Text(errorMessage)
             } else {
                 let items = convertToItems(stands: planningModel.standsPlanning, zones: planningModel.zonesPlanning)
-                let groupedItems = Dictionary(grouping: items, by: { $0.date })
+                let groupedItems = Dictionary(grouping: items, by: { $0.date }).mapValues { items in
+                    items.sorted(by: { first, second in
+                        heures.firstIndex(where: { $0 == first.horaireCota.first?.heure }) ?? 0 <
+                        heures.firstIndex(where: { $0 == second.horaireCota.first?.heure }) ?? 0
+                    })
+                }
+                
                 let sortedDates = groupedItems.keys.sorted()
                 
                 List {
-                    ForEach(sortedDates, id: \.self) { date in
-                        Section(header: Text(formatDate(date: date))) {
-                            ForEach(groupedItems[date] ?? [], id: \.id) { item in
-                                switch item.type {
-                                case .stand(let stand):
-                                    VStack {
-                                        Text("Stand: \(stand.nomStand)")
-                                        Text("date : \(formatDate(date: stand.date))")
-                                        ForEach(stand.horaireCota, id: \.id) { horaire in
-                                            Text("horaire : \(horaire.heure)")
-                                        }
-                                    }
-                                case .zone(let zone):
-                                    VStack {
-                                        Text("Zone: \(zone.nomZone)")
-                                        Text("date : \(formatDate(date: zone.date))")
-                                        ForEach(zone.horaireCota, id: \.id) { horaire in
-                                            Text("horaire : \(horaire.heure)")
+                            ForEach(sortedDates, id: \.self) { date in
+                                Section(header: Text(formatDate(date: date))) {
+                                    ForEach(groupedItems[date] ?? [], id: \.id) { item in
+                                        HStack {
+                                            Text("\(item.horaire) : ") 
+                                            Text(item.name)
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                }
             }
         }
         .onAppear {
@@ -74,4 +68,3 @@ struct PlanningView: View {
         }
     }
 }
-

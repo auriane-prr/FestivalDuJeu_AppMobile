@@ -12,6 +12,17 @@ struct Items: Identifiable {
     let name: String
     let date: Date
     let type: ItemType
+    let horaire : String
+
+    // Computed property to access horaireCota
+    var horaireCota: [HoraireCota] {
+        switch type {
+        case .stand(let stand):
+            return stand.horaireCota
+        case .zone(let zone):
+            return zone.horaireCota
+        }
+    }
 }
 
 enum ItemType {
@@ -20,10 +31,22 @@ enum ItemType {
 }
 
 
-// Conversion des stands et zones en Items
 func convertToItems(stands: [StandPlanning], zones: [ZonePlanning]) -> [Items] {
-    let standItems = stands.map { Items(id: $0.id, name: $0.nomStand, date: $0.date, type: .stand($0)) }
-    let zoneItems = zones.map { Items(id: $0.id, name: $0.nomZone, date: $0.date, type: .zone($0)) }
+    var items: [Items] = []
     
-    return standItems + zoneItems
+    for stand in stands {
+        for horaire in stand.horaireCota {
+            let item = Items(id: "\(stand.id)-\(horaire.id)", name: stand.nomStand, date: stand.date, type: .stand(stand), horaire: horaire.heure)
+            items.append(item)
+        }
+    }
+    
+    for zone in zones {
+        for horaire in zone.horaireCota {
+            let item = Items(id: "\(zone.id)-\(horaire.id)", name: zone.nomZone, date: zone.date, type: .zone(zone), horaire: horaire.heure)
+            items.append(item)
+        }
+    }
+    
+    return items
 }
