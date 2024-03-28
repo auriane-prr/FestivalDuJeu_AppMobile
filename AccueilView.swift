@@ -31,9 +31,21 @@ struct AccueilView: View {
                 Divider()
 
                 VStack(alignment: .leading) {
-                    Text("RECHERCHE JEUX")
-                        .font(.headline)
-                        .padding(.bottom, 10)
+                    HStack{
+                        Text("RECHERCHE JEUX")
+                            .font(.headline)
+                        
+                        if let image = UIImage(named: "logo_court") {
+                            Image(uiImage: image)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100, height: 100)
+                                .offset(x: 80, y: -20)
+                                .padding(.bottom, -80)
+                        }
+                    }
+                    .padding(.bottom, 10)
+                    
                     Text("Tu cherches un jeu à animer ?")
                     Text("Trouves sa zone ici : ")
                     
@@ -42,11 +54,13 @@ struct AccueilView: View {
                         .padding()
 
                     List(gameModel.gameSuggestions) { gameWithZone in
-                        VStack(alignment: .leading) {
-                            Text(gameWithZone.nomJeu)
-                                .font(.headline)
-                            Text("Zone: \(gameWithZone.nomZone)")
-                                .font(.subheadline)
+                        NavigationLink(destination: ParticiperZoneView()){
+                            VStack(alignment: .leading) {
+                                Text(gameWithZone.nomJeu)
+                                    .font(.headline)
+                                Text("Zone: \(gameWithZone.nomZone)")
+                                    .font(.subheadline)
+                            }
                         }
                     }
                 }
@@ -63,13 +77,6 @@ struct AccueilView: View {
                     .frame(width: 300, height: 200)
                     .offset(y: -50),
                 alignment: .top
-            )
-            .overlay(
-                Image("logo_court")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100, height: 100)
-                    .offset(x: 110, y: -90)
             )
         }
     }

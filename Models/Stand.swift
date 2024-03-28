@@ -9,14 +9,14 @@ import Foundation
 
 struct Stand: Codable, Identifiable {
     let id: String
-    let referents: [BenevoleId] // Les ID des référents
+    let referents: [BenevoleId]
     let nomStand: String
     let description: String
     let date: Date
     let horaireCota: [HoraireCota]
 
     enum CodingKeys: String, CodingKey {
-        case id = "_id" // Ajouté
+        case id = "_id"
         case referents
         case nomStand = "nom_stand"
         case description

@@ -26,7 +26,6 @@ class PlanningViewModel: ObservableObject {
 
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
-            // Ajoutez ici d'autres headers si nécessaire, par exemple pour l'authentification
 
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .formatted(DateFormatter.iso8601Full)

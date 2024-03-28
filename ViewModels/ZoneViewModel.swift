@@ -149,4 +149,73 @@ class ZoneViewModel: ObservableObject {
                 }
             }.resume()
         }
+    
+//    func removeBenevoleFromZone(idBenevole: String, idHoraire: String, completion: @escaping (Bool, String?) -> Void) {
+//        print("je suis dans removeBenevoleFromZone")
+//        print("bénévole : \(idBenevole)")
+//        print("horaire : \(idHoraire)")
+//        guard let url = URL(string: "https://festivaldujeuback.onrender.com/zoneBenevole/removeBenevole/\(idHoraire)/\(idBenevole)") else {
+//            completion(false, "URL invalide pour la désinscription.")
+//            return
+//        }
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "DELETE"
+//
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let error = error {
+//                completion(false, "Erreur lors de la désinscription : \(error.localizedDescription)")
+//                print("Erreur lors de la désinscription : \(error.localizedDescription)")
+//                return
+//            }
+//
+//            guard let httpResponse = response as? HTTPURLResponse else {
+//                completion(false, "Réponse invalide du serveur.")
+//                print("Réponse invalide du serveur.")
+//                return
+//            }
+//
+//            if httpResponse.statusCode == 200 {
+//                if let index = self.zones.firstIndex(where: { zone in
+//                    zone.horaireCota.contains(where: { cota in
+//                        cota.id == idHoraire
+//                    })
+//                }),
+//                   let horaireIndex = self.zones[index].horaireCota.firstIndex(where: { cota in
+//                    cota.id == idHoraire
+//                   }),
+//                   let benevoleIndex = self.zones[index].horaireCota[horaireIndex].listeBenevole?.firstIndex(where: { benevole in
+//                    benevole.id == idBenevole
+//                   }) {
+//                    var horaireCotaCopy = self.zones[index].horaireCota
+//                    var listeBenevoleCopy = horaireCotaCopy[horaireIndex].listeBenevole ?? []
+//                    listeBenevoleCopy.remove(at: benevoleIndex)
+//
+//                    let horaireCota = HoraireCota(id: horaireCotaCopy[horaireIndex].id,
+//                                                  heure: horaireCotaCopy[horaireIndex].heure,
+//                                                  nbBenevole: horaireCotaCopy[horaireIndex].nbBenevole,
+//                                                  listeBenevole: listeBenevoleCopy)
+//
+//                    horaireCotaCopy[horaireIndex] = horaireCota
+//
+//                    let zone = Zone(id: self.zones[index].id,
+//                                    nomZone: self.zones[index].nomZone,
+//                                    referents: self.zones[index].referents,
+//                                    idZone: self.zones[index].idZone,
+//                                    date: self.zones[index].date,
+//                                    listeJeux: self.zones[index].listeJeux,
+//                                    horaireCota: horaireCotaCopy)
+//
+//                    self.zones[index] = zone
+//                }
+//
+//                completion(true, "Vous avez été désinscrit de la zone avec succès.")
+//                print("Vous avez été désinscrit de la zone avec succès.")
+//            } else {
+//                completion(false, "Erreur lors de la désinscription.")
+//                print("Erreur lors de la désinscription.")
+//            }
+//        }.resume()
+//    }
+
 }

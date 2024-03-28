@@ -13,16 +13,6 @@ struct Items: Identifiable {
     let date: Date
     let type: ItemType
     let horaire : String
-
-    // Computed property to access horaireCota
-    var horaireCota: [HoraireCota] {
-        switch type {
-        case .stand(let stand):
-            return stand.horaireCota
-        case .zone(let zone):
-            return zone.horaireCota
-        }
-    }
 }
 
 enum ItemType {
